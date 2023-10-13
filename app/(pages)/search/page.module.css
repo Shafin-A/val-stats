@@ -1,0 +1,30 @@
+.main {
+  text-align: center;
+  display: block;
+  margin: auto;
+}
+
+.title_logo_container {
+  display: inline-flex;
+  font-size: xx-large;
+}
+
+.logo_container {
+  display: block;
+  margin: auto 8px auto auto;
+}
+
+.logo {
+  fill: #000;
+  height: 100px;
+  width: fit-content;
+
+  @media (prefers-color-scheme: dark) {
+    fill: #fff;
+  }
+}
+
+.search_container {
+  display: flex;
+  justify-content: center;
+}

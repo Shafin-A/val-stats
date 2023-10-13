@@ -1,0 +1,61 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #263747;
+    color: white;
+    padding: 10px 20px;
+    height: 74px;
+}
+
+.logoContainer {
+    background-color: #FF4655;
+    border-radius: 0.5rem;
+}
+
+.logo {
+    height: 54px;
+    width: 54px;
+    fill: white;
+}
+
+.searchIconContainer {
+    background-color: #0F1923;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    transition: background-color 0.3s, padding 0.3s;
+    cursor: pointer;
+}
+
+.searchIconContainerSearchVisible {
+    background-color: #0F1923;
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    width: 20px;
+    transition: background-color 0.3s, padding 0.3s, width 0.3s;
+    cursor: pointer;
+}
+
+.searchIcon {
+    height: 30px;
+    width: 30px;
+    fill: #ffffffbf;
+    transition: height 0.3s, width 0.3s, fill 0.3s;
+}
+
+.searchIconSearchVisible {
+    height: 10px;
+    width: 20px;
+    fill: #ffffffbf;
+    transition: height 0.3s, width 0.3s, fill 0.3s;
+}
+
+.searchComponent {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.searchComponentVisible {
+    opacity: 1;
+    transition: opacity 0.3s;
+}
