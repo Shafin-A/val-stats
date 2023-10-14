@@ -45,7 +45,9 @@ export const LeaderboardCard = ({
           <span className={styles.tag_line}>#{tagLine}</span>
         </div>
         <div>
-          <span className={styles.region_text}>Top {region} Rating</span>
+          <span className={styles.region_text}>
+            Top <span className={styles.upper_case}>{region}</span> Rating
+          </span>
         </div>
         <div>
           <span className={styles.ranked_rating}>{rankedRating}</span>
@@ -53,9 +55,7 @@ export const LeaderboardCard = ({
       </a>
       <a className={styles.see_leaderboard_link} href="/player/123">
         <span className={styles.see_leaderboard_text}>
-          See{" "}
-          <span className={styles.see_leaderboard_region_text}>{region}</span>{" "}
-          Leaderboard
+          See <span className={styles.upper_case}>{region}</span> Leaderboard
         </span>
       </a>
     </div>
