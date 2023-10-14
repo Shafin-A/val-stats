@@ -16,7 +16,9 @@ export const NavBar = () => {
   return (
     <nav className={styles.nav}>
       <div className={styles.logoContainer}>
-        <ValorantLogo className={styles.logo} />
+        <a href="/search">
+          <ValorantLogo className={styles.logo} />
+        </a>
       </div>
       <div>
         <div
@@ -26,6 +28,10 @@ export const NavBar = () => {
               : styles.searchIconContainer
           }
           onClick={handleSearchClick}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSearchClick();
+          }}
+          tabIndex={0}
         >
           <SearchIcon
             className={
