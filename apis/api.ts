@@ -2,7 +2,7 @@ import { LeaderboardPlayer } from "../types/types";
 
 export const getLeaderboardData = async (
   affinity: string
-): Promise<LeaderboardPlayer[]> => {
+): Promise<Record<string, LeaderboardPlayer[]>> => {
   const res = await fetch(
     `https://api.henrikdev.xyz/valorant/v1/leaderboard/${affinity}`
     // { next: { revalidate: 1 } }
@@ -16,16 +16,20 @@ export const getLeaderboardData = async (
   // Add the region
   const data = (await res.json()) as LeaderboardPlayer[];
 
-  return data.map((player) => ({ ...player, region: affinity }));
+  return { [affinity]: data };
 };
 
 export const getAllLeaderboardData = async (
   regions: string[]
-): Promise<LeaderboardPlayer[]> => {
+): Promise<Record<string, LeaderboardPlayer[]>> => {
   const promises = regions.map((region) => getLeaderboardData(region));
   const results = await Promise.all(promises);
 
-  const leaderboardData = results.flat();
+  const leaderboardData: Record<string, LeaderboardPlayer[]> = {};
+
+  regions.forEach((region, index) => {
+    leaderboardData[region] = results[index][region];
+  });
 
   return leaderboardData;
 };

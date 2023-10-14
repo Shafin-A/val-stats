@@ -18,20 +18,21 @@ const REGIONS = {
 const Page = async () => {
   const leaderboardData = await getAllLeaderboardData(Object.values(REGIONS));
 
-  const rankOnePlayers: LeaderboardPlayer[] = [];
+  const topPlayersByRegion: Record<string, LeaderboardPlayer> = {};
+  const suggestions: string[] = [];
 
-  const suggestions = leaderboardData
-    .filter((leaderboardPlayer) => {
-      if (leaderboardPlayer.leaderboardRank === 1)
-        rankOnePlayers.push(leaderboardPlayer);
+  for (const region in leaderboardData) {
+    const players = leaderboardData[region];
 
-      return leaderboardPlayer.gameName;
-    })
-    .map((obj) => `${obj.gameName}#${obj.tagLine}`);
+    for (const player of players) {
+      if (player.leaderboardRank === 1) {
+        topPlayersByRegion[region] = player;
+      }
 
-  // const suggestions = ["Terfin#Omris", "Omris#Terfin"];
-
-  console.log(rankOnePlayers);
+      if (!player.IsAnonymized)
+        suggestions.push(`${player.gameName}#${player.tagLine}`);
+    }
+  }
 
   return (
     <main className={styles.main}>
@@ -47,14 +48,14 @@ const Page = async () => {
         </Suspense>
       </div>
       <div className={styles.leaderboard_cards_container}>
-        {rankOnePlayers.map((player) => (
+        {Object.entries(topPlayersByRegion).map(([region, player]) => (
           <LeaderboardCard
             key={player.puuid}
             playerCardID={player.PlayerCardID}
             leaderboardRank={player.leaderboardRank}
             gameName={player.gameName}
             tagLine={player.tagLine}
-            region={player.region}
+            region={region}
             rankedRating={player.rankedRating}
             isAnonymized={player.IsAnonymized}
           />

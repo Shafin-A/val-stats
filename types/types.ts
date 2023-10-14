@@ -10,5 +10,4 @@ export interface LeaderboardPlayer {
   rankedRating: number;
   numberOfWins: number;
   competitiveTier: number;
-  region: string;
 }
