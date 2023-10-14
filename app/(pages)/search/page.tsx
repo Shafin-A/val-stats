@@ -4,6 +4,7 @@ import ValorantLogo from "../../../assets/valorant.svg";
 import { getAllLeaderboardData } from "../../../apis/api";
 import { Suspense } from "react";
 import { LeaderboardPlayer } from "../../../types/types";
+import { LeaderboardCard } from "../../components/leaderboardCard";
 
 const REGIONS = {
   NA: "na",
@@ -44,6 +45,20 @@ const Page = async () => {
         <Suspense fallback={<p>Loading leaderboard....</p>}>
           <Search suggestions={suggestions} />
         </Suspense>
+      </div>
+      <div className={styles.leaderboard_cards_container}>
+        {rankOnePlayers.map((player) => (
+          <LeaderboardCard
+            key={player.puuid}
+            playerCardID={player.PlayerCardID}
+            leaderboardRank={player.leaderboardRank}
+            gameName={player.gameName}
+            tagLine={player.tagLine}
+            region={player.region}
+            rankedRating={player.rankedRating}
+            isAnonymized={player.IsAnonymized}
+          />
+        ))}
       </div>
     </main>
   );

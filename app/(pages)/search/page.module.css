@@ -28,3 +28,10 @@
   display: flex;
   justify-content: center;
 }
+
+.leaderboard_cards_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  gap: 12px;
+}

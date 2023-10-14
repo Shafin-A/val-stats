@@ -1,0 +1,101 @@
+.card_container {
+    position: relative;
+    background-color: #263747;
+    width: 10rem;
+    min-width: 10rem;
+    max-width: 10rem;
+    border-radius: 0.25rem;
+}
+
+.card_player_link {
+    text-decoration: none;
+}
+
+.leaderboard_rank {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: linear-gradient(to bottom, #FFEB99, #AD801C);
+    color: #111;
+    padding: 0.5rem;
+    border-bottom-left-radius: 1.5rem;
+    border-top-right-radius: 0.25rem;
+}
+
+.leaderboard_rank_text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.5rem;
+}
+
+.card_image {
+    border-radius: 50%;
+    padding: 0.25rem;
+    min-height: 4.5rem;
+    min-width: 4.5rem;
+    height: 4.5rem;
+    width: 4.5rem;
+    margin: 0.5rem 0.5rem 0;
+    position: relative;
+    box-shadow: 0 0 0 0.25rem #cbb765 inset;
+}
+
+.game_name_container {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.game_name {
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.tag_line {
+    background-color: #ffffff29;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0 0.25em;
+    border-radius: 0.125em;
+    line-height: 1.5em;
+    opacity: .75;
+}
+
+.region_text {
+    color: #cbb765;
+    font-size: .75rem;
+    font-weight: 500;
+}
+
+.ranked_rating {
+    max-width: 9rem;
+    font-size: 2rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.see_leaderboard_link {
+    display: block;
+    align-self: stretch;
+    background-color: #ffffff26;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    text-align: center;
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.see_leaderboard_link:hover {
+    filter: brightness(115%);
+    backdrop-filter: saturate(150%);
+}
+
+.see_leaderboard_text {
+    font-size: .875rem;
+    font-weight: 700;
+}
+
+.see_leaderboard_region_text {
+    text-transform: uppercase;
+}
