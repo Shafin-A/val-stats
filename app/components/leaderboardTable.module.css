@@ -1,0 +1,41 @@
+.leaderboard {
+    margin: 20px;
+}
+
+.leaderboard_table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+.leaderboard_table th,
+.leaderboard_table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.page_info {
+    margin: 0 20px;
+}
+
+.pagination_button {
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.pagination_button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

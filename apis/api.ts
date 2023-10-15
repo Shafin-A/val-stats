@@ -4,8 +4,8 @@ export const getLeaderboardData = async (
   affinity: string
 ): Promise<Record<string, LeaderboardPlayer[]>> => {
   const res = await fetch(
-    `https://api.henrikdev.xyz/valorant/v1/leaderboard/${affinity}`
-    // { next: { revalidate: 1 } }
+    `https://api.henrikdev.xyz/valorant/v1/leaderboard/${affinity}`,
+    { next: { revalidate: 300 } }
   );
 
   if (!res.ok) {

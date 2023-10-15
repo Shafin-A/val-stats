@@ -6,7 +6,7 @@ import { Suspense } from "react";
 import { LeaderboardPlayer } from "../../../types/types";
 import { LeaderboardCard } from "../../components/leaderboardCard";
 
-const REGIONS = {
+export const REGIONS = {
   NA: "na",
   EU: "eu",
   LATAM: "latam",
