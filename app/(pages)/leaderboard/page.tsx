@@ -8,7 +8,11 @@ const Page = async () => {
 
   return (
     <>
-      <LeaderboardTable players={leaderboardData["na"]} playersPerPage={50} />
+      <LeaderboardTable
+        players={leaderboardData["na"]}
+        playersPerPage={25}
+        paginationPageNumber={5}
+      />
     </>
   );
 };

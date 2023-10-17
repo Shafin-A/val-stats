@@ -4,15 +4,18 @@ import React, { useState } from "react";
 import { LeaderboardPlayer } from "../../types/types";
 import styles from "./leaderboardTable.module.css";
 import { PlayerTagLine } from "./playerTagline";
+import { Pagination } from "./pagination";
 
 interface LeaderboardTableProps {
   players: LeaderboardPlayer[];
   playersPerPage: number;
+  paginationPageNumber: number;
 }
 
 export const LeaderboardTable = ({
   players,
   playersPerPage,
+  paginationPageNumber,
 }: LeaderboardTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -21,7 +24,6 @@ export const LeaderboardTable = ({
   const firstPlayerIndex = lastPlayerIndex - playersPerPage;
 
   const currentPagePlayers = players.slice(firstPlayerIndex, lastPlayerIndex);
-
   const totalPages = Math.ceil(players.length / playersPerPage);
 
   const renderTableRows = currentPagePlayers.map((player) => (
@@ -59,25 +61,13 @@ export const LeaderboardTable = ({
         </thead>
         <tbody>{renderTableRows}</tbody>
       </table>
-      <div className={styles.pagination}>
-        <button
-          className={styles.pagination_button}
-          onClick={() => setCurrentPage(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <button
-          className={styles.pagination_button}
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-        <p className={styles.page_info}>
-          Page {currentPage} of {totalPages}
-        </p>
-      </div>
+
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        paginationPageNumber={paginationPageNumber}
+      />
     </div>
   );
 };

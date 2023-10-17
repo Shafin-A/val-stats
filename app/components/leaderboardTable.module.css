@@ -30,31 +30,6 @@
     background-color: #1b2733;
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.page_info {
-    margin: 0 20px;
-}
-
-.pagination_button {
-    padding: 8px 16px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 4px;
-}
-
-.pagination_button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
 .text_style {
     font-size: 1.125rem;
     font-weight: 700;
