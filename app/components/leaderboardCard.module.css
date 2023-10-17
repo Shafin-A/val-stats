@@ -51,16 +51,6 @@
     font-weight: 700;
 }
 
-.tag_line {
-    background-color: #ffffff29;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 0 0.25em;
-    border-radius: 0.125em;
-    line-height: 1.5em;
-    opacity: .75;
-}
-
 .region_text {
     color: #cbb765;
     font-size: .75rem;

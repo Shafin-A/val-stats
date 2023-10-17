@@ -8,7 +8,7 @@ const Page = async () => {
 
   return (
     <>
-      <LeaderboardTable players={leaderboardData["na"]} playersPerPage={100} />
+      <LeaderboardTable players={leaderboardData["na"]} playersPerPage={50} />
     </>
   );
 };

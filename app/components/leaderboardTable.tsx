@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { LeaderboardPlayer } from "../../types/types";
 import styles from "./leaderboardTable.module.css";
+import { PlayerTagLine } from "./playerTagline";
 
 interface LeaderboardTableProps {
   players: LeaderboardPlayer[];
@@ -24,12 +25,21 @@ export const LeaderboardTable = ({
   const totalPages = Math.ceil(players.length / playersPerPage);
 
   const renderTableRows = currentPagePlayers.map((player) => (
-    <tr key={player.leaderboardRank}>
+    <tr key={player.leaderboardRank} className={styles.text_style}>
       <td>{player.leaderboardRank}</td>
       <td>
-        {player.IsAnonymized
-          ? "Secret Agent"
-          : `${player.gameName}#${player.tagLine}`}
+        <img
+          className={styles.card_image}
+          src={`https://media.valorant-api.com/playercards/${player.PlayerCardID}/smallart.png`}
+          alt="player in-game card image"
+        />
+        {player.IsAnonymized ? (
+          "Secret Agent"
+        ) : (
+          <span>
+            {player.gameName} <PlayerTagLine tagLine={player.tagLine} />
+          </span>
+        )}
       </td>
       <td>{player.rankedRating}</td>
       <td>{player.numberOfWins}</td>

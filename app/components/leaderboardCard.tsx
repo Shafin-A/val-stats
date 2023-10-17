@@ -1,4 +1,5 @@
 import styles from "./leaderboardCard.module.css";
+import { PlayerTagLine } from "./playerTagline";
 
 interface LeaderboardCardProps {
   playerCardID: string;
@@ -42,7 +43,7 @@ export const LeaderboardCard = ({
           </span>
         </div>
         <div>
-          <span className={styles.tag_line}>#{tagLine}</span>
+          <PlayerTagLine tagLine={tagLine} />
         </div>
         <div>
           <span className={styles.region_text}>

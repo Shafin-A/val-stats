@@ -1,18 +1,33 @@
 .leaderboard {
-    margin: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 32px auto;
+    max-width: 1280px;
+    width: 100%;
 }
 
 .leaderboard_table {
-    width: 100%;
     border-collapse: collapse;
-    border: 1px solid #ddd;
+    border: 1px solid #1b2733;
 }
 
 .leaderboard_table th,
 .leaderboard_table td {
-    border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+}
+
+.leaderboard_table th {
+    background-color: #1b2733;
+}
+
+.leaderboard_table tr:nth-child(odd) {
+    background-color: #0F1923;
+}
+
+.leaderboard_table tr:nth-child(even) {
+    background-color: #1b2733;
 }
 
 .pagination {
@@ -38,4 +53,22 @@
 .pagination_button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+}
+
+.text_style {
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.card_image {
+    border-radius: 50%;
+    padding: 0.15rem;
+    min-height: 2rem;
+    min-width: 2rem;
+    height: 2rem;
+    width: 2rem;
+    position: relative;
+    box-shadow: 0 0 0 0.15rem #ffffff inset;
+    vertical-align: middle;
+    margin-right: 1rem;
 }
