@@ -54,7 +54,10 @@ export const LeaderboardCard = ({
           <span className={styles.ranked_rating}>{rankedRating}</span>
         </div>
       </a>
-      <a className={styles.see_leaderboard_link} href="/player/123">
+      <a
+        className={styles.see_leaderboard_link}
+        href={`/leaderboard?region=${region}`}
+      >
         <span className={styles.see_leaderboard_text}>
           See <span className={styles.upper_case}>{region}</span> Leaderboard
         </span>

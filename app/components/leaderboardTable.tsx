@@ -6,6 +6,7 @@ import styles from "./leaderboardTable.module.css";
 import { PlayerTagLine } from "./playerTagline";
 import { Pagination } from "./pagination";
 import { REGIONS } from "../(pages)/search/page";
+import { useSearchParams, useRouter } from "next/navigation";
 
 interface LeaderboardTableProps {
   leaderboardData: Record<string, LeaderboardPlayer[]>;
@@ -18,7 +19,14 @@ export const LeaderboardTable = ({
   playersPerPage,
   paginationPageNumber,
 }: LeaderboardTableProps) => {
-  const [selectedRegion, setSelectedRegion] = useState(REGIONS.NA);
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const urlRegion = searchParams.get("region");
+
+  const initalRegion = urlRegion ?? REGIONS.NA;
+
+  const [selectedRegion, setSelectedRegion] = useState(initalRegion);
   const [currentPage, setCurrentPage] = useState(1);
 
   const players = leaderboardData[selectedRegion];
@@ -56,7 +64,13 @@ export const LeaderboardTable = ({
     <div className={styles.leaderboard}>
       <div className={styles.region_select_container}>
         <label>Region</label>
-        <select onChange={(e) => setSelectedRegion(e.target.value)}>
+        <select
+          defaultValue={initalRegion}
+          onChange={(e) => {
+            setSelectedRegion(e.target.value);
+            router.replace(`/leaderboard?region=${e.target.value}`);
+          }}
+        >
           {Object.values(REGIONS).map((region) => (
             <option key={region} value={region}>
               {region}
