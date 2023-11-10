@@ -5,19 +5,23 @@ import { LeaderboardPlayer } from "../../types/types";
 import styles from "./leaderboardTable.module.css";
 import { PlayerTagLine } from "./playerTagline";
 import { Pagination } from "./pagination";
+import { REGIONS } from "../(pages)/search/page";
 
 interface LeaderboardTableProps {
-  players: LeaderboardPlayer[];
+  leaderboardData: Record<string, LeaderboardPlayer[]>;
   playersPerPage: number;
   paginationPageNumber: number;
 }
 
 export const LeaderboardTable = ({
-  players,
+  leaderboardData,
   playersPerPage,
   paginationPageNumber,
 }: LeaderboardTableProps) => {
+  const [selectedRegion, setSelectedRegion] = useState(REGIONS.NA);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const players = leaderboardData[selectedRegion];
 
   // Calculate the index range for the current page
   const lastPlayerIndex = currentPage * playersPerPage;
@@ -50,6 +54,17 @@ export const LeaderboardTable = ({
 
   return (
     <div className={styles.leaderboard}>
+      <div className={styles.region_select_container}>
+        <label>Region</label>
+        <select onChange={(e) => setSelectedRegion(e.target.value)}>
+          {Object.values(REGIONS).map((region) => (
+            <option key={region} value={region}>
+              {region}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <table className={styles.leaderboard_table}>
         <thead>
           <tr>
