@@ -1,0 +1,38 @@
+diff --git a/node_modules/next/dist/esm/server/lib/incremental-cache/index.js b/node_modules/next/dist/esm/server/lib/incremental-cache/index.js
+index a120f69..8f59969 100644
+--- a/node_modules/next/dist/esm/server/lib/incremental-cache/index.js
++++ b/node_modules/next/dist/esm/server/lib/incremental-cache/index.js
+@@ -339,9 +339,12 @@ export class IncrementalCache {
+         }
+         if (this.dev && !ctx.fetchCache) return;
+         // fetchCache has upper limit of 2MB per-entry currently
+-        if (ctx.fetchCache && JSON.stringify(data).length > 2 * 1024 * 1024) {
++        if (ctx.fetchCache && JSON.stringify(data).length > 20  * 1024 * 1024) {
+             if (this.dev) {
+-                throw new Error(`fetch for over 2MB of data can not be cached`);
++                throw new Error(`fetch for over 20MB of data (${JSON.stringify(data).length}MB) can not be cached`);
++            }
++            else {
++                console.log(`caching an object of length ${JSON.stringify(data).length}`)
+             }
+             return;
+         }
+diff --git a/node_modules/next/dist/server/lib/incremental-cache/index.js b/node_modules/next/dist/server/lib/incremental-cache/index.js
+index 3d28b63..be1b824 100644
+--- a/node_modules/next/dist/server/lib/incremental-cache/index.js
++++ b/node_modules/next/dist/server/lib/incremental-cache/index.js
+@@ -366,9 +366,12 @@ class IncrementalCache {
+         }
+         if (this.dev && !ctx.fetchCache) return;
+         // fetchCache has upper limit of 2MB per-entry currently
+-        if (ctx.fetchCache && JSON.stringify(data).length > 2 * 1024 * 1024) {
++        if (ctx.fetchCache && JSON.stringify(data).length > 20  * 1024 * 1024) {
+             if (this.dev) {
+-                throw new Error(`fetch for over 2MB of data can not be cached`);
++                throw new Error(`fetch for over 20MB of data (${JSON.stringify(data).length}MB) can not be cached`);
++            }
++            else {
++                console.log(`caching an object of length ${JSON.stringify(data).length}`)
+             }
+             return;
+         }
