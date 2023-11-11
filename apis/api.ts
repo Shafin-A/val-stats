@@ -1,4 +1,4 @@
-import { LeaderboardPlayer } from "../types/types";
+import { LeaderboardPlayer, Match } from "../types/types";
 
 export const getLeaderboardData = async (
   affinity: string
@@ -9,8 +9,7 @@ export const getLeaderboardData = async (
   );
 
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
+    throw new Error("Failed to fetch leaderboard data");
   }
 
   // Add the region
@@ -32,4 +31,28 @@ export const getAllLeaderboardData = async (
   });
 
   return leaderboardData;
+};
+
+export const getPlayerMatches = async (
+  affinity: string,
+  name: string,
+  tag: string,
+  numMatches: number,
+  matchMode: string
+): Promise<Match[]> => {
+  const res = await fetch(
+    `https://api.henrikdev.xyz/valorant/v3/matches/${affinity}/${name}/${tag}?size=${numMatches}&mode=${matchMode}`
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch match data");
+  }
+
+  const { status, data } = await res.json();
+
+  if (status !== 200) {
+    throw new Error("Failed to fetch match data");
+  }
+
+  return data;
 };
