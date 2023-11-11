@@ -1,4 +1,4 @@
-import { LeaderboardPlayer, Match } from "../types/types";
+import { LeaderboardPlayer, Match, PlayerAccount } from "../types/types";
 
 export const getLeaderboardData = async (
   affinity: string
@@ -33,6 +33,28 @@ export const getAllLeaderboardData = async (
   return leaderboardData;
 };
 
+export const getPlayerAccount = async (
+  name: string,
+  tag: string
+): Promise<PlayerAccount> => {
+  const res = await fetch(
+    `https://api.henrikdev.xyz/valorant/v1/account/${name}/${tag}`,
+    { next: { revalidate: 300 } }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch player data");
+  }
+
+  const { status, data } = await res.json();
+
+  if (status !== 200) {
+    throw new Error("Failed to fetch player data");
+  }
+
+  return data as PlayerAccount;
+};
+
 export const getPlayerMatches = async (
   affinity: string,
   name: string,
@@ -41,7 +63,8 @@ export const getPlayerMatches = async (
   matchMode: string
 ): Promise<Match[]> => {
   const res = await fetch(
-    `https://api.henrikdev.xyz/valorant/v3/matches/${affinity}/${name}/${tag}?size=${numMatches}&mode=${matchMode}`
+    `https://api.henrikdev.xyz/valorant/v3/matches/${affinity}/${name}/${tag}?size=${numMatches}&mode=${matchMode}`,
+    { next: { revalidate: 300 } }
   );
 
   if (!res.ok) {
@@ -54,5 +77,5 @@ export const getPlayerMatches = async (
     throw new Error("Failed to fetch match data");
   }
 
-  return data;
+  return data as Match[];
 };
