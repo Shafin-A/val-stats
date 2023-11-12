@@ -3,7 +3,7 @@ import { Round } from "../types/types";
 export const calculateKAST = (playerPuuid: string, rounds: Round[]): number => {
   let roundsWithImpact = 0;
 
-  rounds.forEach((round, index) => {
+  rounds.forEach((round) => {
     const playerStats = round.player_stats.find(
       (stats) => stats.player_puuid === playerPuuid
     );
@@ -85,7 +85,6 @@ export const calculateKAST = (playerPuuid: string, rounds: Round[]): number => {
             (killEvent) =>
               killEvent.victim_puuid in playerKillersInRound &&
               playerKillersInRound[killEvent.victim_puuid].some((time) => {
-                console.log(killEvent.kill_time_in_round, time, index + 1);
                 return (
                   killEvent.kill_time_in_round - time <=
                   TIME_THRESHOLD_FOR_TRADE
@@ -100,7 +99,7 @@ export const calculateKAST = (playerPuuid: string, rounds: Round[]): number => {
     }
   });
 
-  // Calculate KAST
+  // Calculate KAST as percentage
   const totalRounds = rounds.length;
   const kast = (roundsWithImpact / totalRounds) * 100;
 
