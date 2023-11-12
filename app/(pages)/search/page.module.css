@@ -34,4 +34,5 @@
   justify-content: center;
   margin-top: 12px;
   gap: 12px;
+  flex-wrap: wrap
 }

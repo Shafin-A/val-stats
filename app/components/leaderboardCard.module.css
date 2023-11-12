@@ -1,4 +1,6 @@
 .card_container {
+    display: flex;
+    flex-direction: column;
     position: relative;
     background-color: #263747;
     width: 10rem;
@@ -9,6 +11,12 @@
 
 .card_player_link {
     text-decoration: none;
+    height: 13rem;
+}
+
+.card_player_link:hover {
+    filter: brightness(115%);
+    backdrop-filter: saturate(150%);
 }
 
 .leaderboard_rank {
@@ -66,7 +74,7 @@
 }
 
 .see_leaderboard_link {
-    display: block;
+    flex: auto;
     align-self: stretch;
     background-color: #ffffff26;
     padding: 0.75rem 1rem;
