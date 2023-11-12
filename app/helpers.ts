@@ -1,4 +1,4 @@
-import { Round } from "../types/types";
+import { Match, Round } from "../types/types";
 
 export const calculateKAST = (playerPuuid: string, rounds: Round[]): number => {
   let roundsWithImpact = 0;
@@ -104,4 +104,22 @@ export const calculateKAST = (playerPuuid: string, rounds: Round[]): number => {
   const kast = (roundsWithImpact / totalRounds) * 100;
 
   return kast;
+};
+
+export const calculateShotPercentage = (
+  playerPuuid: string,
+  match: Match,
+  shotType: "headshots" | "bodyshots" | "legshots"
+): number => {
+  const player = match.players.all_players.find(
+    (matchPlayer) => matchPlayer.puuid === playerPuuid
+  );
+
+  if (!player) throw new Error("Could not find player in match!");
+
+  const totalShots =
+    player.stats.headshots + player.stats.bodyshots + player.stats.legshots;
+  const totalSpecificShots = player.stats[shotType];
+
+  return (totalSpecificShots / totalShots) * 100;
 };
