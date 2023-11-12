@@ -1,6 +1,9 @@
-import { Match, Round } from "../types/types";
+import { Player, Round } from "../types/types";
 
-export const calculateKAST = (playerPuuid: string, rounds: Round[]): number => {
+export const getKASTForMatch = (
+  playerPuuid: string,
+  rounds: Round[]
+): number => {
   let roundsWithImpact = 0;
 
   rounds.forEach((round) => {
@@ -106,20 +109,35 @@ export const calculateKAST = (playerPuuid: string, rounds: Round[]): number => {
   return kast;
 };
 
-export const calculateShotPercentage = (
-  playerPuuid: string,
-  match: Match,
-  shotType: "headshots" | "bodyshots" | "legshots"
-): number => {
-  const player = match.players.all_players.find(
-    (matchPlayer) => matchPlayer.puuid === playerPuuid
-  );
+export const getPlayerAvgStatsForMatch = (
+  player: Player,
+  totalRounds: number
+) => {
+  const damageMade = player.damage_made;
+  const damageReceived = player.damage_received;
+  const damageDelta = damageMade - damageReceived;
+  const score = player.stats.score;
 
-  if (!player) throw new Error("Could not find player in match!");
+  const AvgDamageDeltaForMatch = damageDelta / totalRounds;
+  const ADRForMatch = damageDelta / totalRounds;
+  const ACSForMatch = score / totalRounds;
 
   const totalShots =
     player.stats.headshots + player.stats.bodyshots + player.stats.legshots;
-  const totalSpecificShots = player.stats[shotType];
+  const totalHeadShots = player.stats.headshots;
+  const totalBodyShots = player.stats.bodyshots;
+  const totalLegShots = player.stats.legshots;
 
-  return (totalSpecificShots / totalShots) * 100;
+  const avgHeadShotPercentage = (totalHeadShots / totalShots) * 100;
+  const avgBodyShotPercentage = (totalBodyShots / totalShots) * 100;
+  const avgLegShotPercentage = (totalLegShots / totalShots) * 100;
+
+  return {
+    AvgDamageDeltaForMatch,
+    ADRForMatch,
+    ACSForMatch,
+    avgHeadShotPercentage,
+    avgBodyShotPercentage,
+    avgLegShotPercentage,
+  };
 };
