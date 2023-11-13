@@ -1,4 +1,4 @@
-import { LeaderboardPlayer, Match, PlayerAccount } from "../types/types";
+import { LeaderboardPlayer, MMR, Match, PlayerAccount } from "../types/types";
 
 export const getLeaderboardData = async (
   affinity: string
@@ -78,4 +78,29 @@ export const getPlayerMatches = async (
   }
 
   return data as Match[];
+};
+
+export const getPlayerMMR = async (
+  affinity: string,
+  name: string,
+  tag: string,
+  season?: string
+): Promise<MMR> => {
+  const apiUrl = `https://api.henrikdev.xyz/valorant/v2/mmr/${affinity}/${name}/${tag}${
+    season ? `?season=${season}` : ""
+  }`;
+
+  const res = await fetch(apiUrl, { next: { revalidate: 300 } });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch MMR data");
+  }
+
+  const { status, data } = await res.json();
+
+  if (status !== 200) {
+    throw new Error("Failed to fetch MMR data");
+  }
+
+  return data as MMR;
 };

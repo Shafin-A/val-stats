@@ -301,3 +301,44 @@ export interface Match {
   };
   rounds: Round[];
 }
+
+export interface MMRData {
+  currenttier: number;
+  currenttier_patched: string;
+  images: {
+    small: string;
+    large: string;
+    triangle_down: string;
+    triangle_up: string;
+  };
+  ranking_in_tier: number;
+  mmr_change_to_last_game: number;
+  elo: number;
+  old: boolean;
+}
+
+export interface SeasonData {
+  error: boolean;
+  wins: number;
+  number_of_games: number;
+  final_rank: number;
+  final_rank_patched: string;
+  act_rank_wins: {
+    patched_tier: string;
+    tier: number;
+  }[];
+  old: boolean;
+}
+
+export interface MMR {
+  name: string;
+  tag: string;
+  current_data: MMRData;
+  highest_rank: {
+    old: boolean;
+    tier: number;
+    patched_tier: string;
+    season: string;
+  };
+  by_season: Record<string, SeasonData>;
+}
