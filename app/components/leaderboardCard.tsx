@@ -1,4 +1,6 @@
 import styles from "./leaderboardCard.module.css";
+import { PlayerCardImage } from "./playerCardImage";
+import { PlayerGameName } from "./playerGameName";
 import { PlayerTagLine } from "./playerTagline";
 
 interface LeaderboardCardProps {
@@ -31,16 +33,10 @@ export const LeaderboardCard = ({
           </div>
         </div>
         <div>
-          <img
-            className={styles.card_image}
-            src={playerCardIdSrc}
-            alt="player in-game card image"
-          />
+          <PlayerCardImage src={playerCardIdSrc} />
         </div>
         <div className={styles.game_name_container}>
-          <span className={styles.game_name}>
-            {isAnonymized ? "Secret Agent" : gameName}
-          </span>
+          <PlayerGameName gameName={isAnonymized ? "Secret Agent" : gameName} />
         </div>
         <div>
           <PlayerTagLine tagLine={tagLine} />

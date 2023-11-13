@@ -7,6 +7,7 @@ import { PlayerTagLine } from "./playerTagline";
 import { Pagination } from "./pagination";
 import { REGIONS } from "../(pages)/search/page";
 import { useSearchParams, useRouter } from "next/navigation";
+import { PlayerGameName } from "./playerGameName";
 
 interface LeaderboardTableProps {
   leaderboardData: Record<string, LeaderboardPlayer[]>;
@@ -51,7 +52,8 @@ export const LeaderboardTable = ({
           "Secret Agent"
         ) : (
           <span>
-            {player.gameName} <PlayerTagLine tagLine={player.tagLine} />
+            <PlayerGameName gameName={player.gameName} />{" "}
+            <PlayerTagLine tagLine={player.tagLine} />
           </span>
         )}
       </td>

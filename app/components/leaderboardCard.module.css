@@ -36,27 +36,10 @@
     line-height: 1.5rem;
 }
 
-.card_image {
-    border-radius: 50%;
-    padding: 0.25rem;
-    min-height: 4.5rem;
-    min-width: 4.5rem;
-    height: 4.5rem;
-    width: 4.5rem;
-    margin: 0.5rem 0.5rem 0;
-    position: relative;
-    box-shadow: 0 0 0 0.25rem #cbb765 inset;
-}
-
 .game_name_container {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-.game_name {
-    font-size: 1.125rem;
-    font-weight: 700;
 }
 
 .region_text {

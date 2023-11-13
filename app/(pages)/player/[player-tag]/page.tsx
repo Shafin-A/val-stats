@@ -1,5 +1,8 @@
 import { getPlayerAccount, getPlayerMatches } from "../../../../apis/api";
 import { getKASTForMatch, getPlayerAvgStatsForMatch } from "../../../helpers";
+import { PlayerCardImage } from "../../../components/playerCardImage";
+import { PlayerTagLine } from "../../../components/playerTagline";
+import { PlayerGameName } from "../../../components/playerGameName";
 
 const Page = async () => {
   const playerAccount = await getPlayerAccount("SEN tarik", "1337");
@@ -50,7 +53,13 @@ const Page = async () => {
   `);
   return (
     <>
-      <div>Player</div>
+      <div>
+        <PlayerCardImage src={playerAccount.card.small} />
+        <div>
+          <PlayerGameName gameName={playerAccount.name} />{" "}
+          <PlayerTagLine tagLine={playerAccount.tag} />
+        </div>
+      </div>
     </>
   );
 };
