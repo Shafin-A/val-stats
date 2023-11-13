@@ -1,4 +1,4 @@
-import { Player, Round } from "../types/types";
+import { Match, Player, Round } from "../types/types";
 
 export const getKASTForMatch = (
   playerPuuid: string,
@@ -110,9 +110,17 @@ export const getKASTForMatch = (
 };
 
 export const getPlayerAvgStatsForMatch = (
-  player: Player,
-  totalRounds: number
-) => {
+  playerPuuid: string,
+  match: Match
+): Record<string, number> => {
+  const player = match.players.all_players.find(
+    (matchPlayer) => matchPlayer.puuid === playerPuuid
+  );
+
+  if (!player) throw new Error("Could not find player in match!");
+
+  const totalRounds = match.rounds.length;
+
   const damageMade = player.damage_made;
   const damageReceived = player.damage_received;
   const damageDelta = damageMade - damageReceived;
@@ -140,4 +148,31 @@ export const getPlayerAvgStatsForMatch = (
     avgBodyShotPercentage,
     avgLegShotPercentage,
   };
+};
+
+export const getOverallAverageStats = (
+  playerPuuid: string,
+  matches: Match[]
+) => {
+  const averageStatsForEachMatch = matches.map((match) => {
+    const playerAvgStats = getPlayerAvgStatsForMatch(playerPuuid, match);
+    playerAvgStats.KAST = getKASTForMatch(playerPuuid, match.rounds);
+
+    return playerAvgStats;
+  });
+
+  const overallAverageStats = averageStatsForEachMatch.reduce((acc, stats) => {
+    for (const stat in stats) {
+      acc[stat] = (acc[stat] || 0) + stats[stat];
+    }
+    return acc;
+  }, {} as Record<string, number>);
+
+  const numberOfMatches = matches.length;
+
+  for (const stat in overallAverageStats) {
+    overallAverageStats[stat] /= numberOfMatches;
+  }
+
+  return overallAverageStats;
 };
