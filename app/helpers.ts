@@ -119,7 +119,7 @@ export const getPlayerAvgStatsForMatch = (
   const score = player.stats.score;
 
   const AvgDamageDeltaForMatch = damageDelta / totalRounds;
-  const ADRForMatch = damageDelta / totalRounds;
+  const ADRForMatch = damageMade / totalRounds;
   const ACSForMatch = score / totalRounds;
 
   const totalShots =
