@@ -8,6 +8,7 @@ import { Pagination } from "./pagination";
 import { REGIONS } from "../(pages)/search/page";
 import { useSearchParams, useRouter } from "next/navigation";
 import { PlayerGameName } from "./playerGameName";
+import { PlayerCardImage } from "./playerCardImage";
 
 interface LeaderboardTableProps {
   leaderboardData: Record<string, LeaderboardPlayer[]>;
@@ -43,10 +44,17 @@ export const LeaderboardTable = ({
     <tr key={player.leaderboardRank} className={styles.text_style}>
       <td>{player.leaderboardRank}</td>
       <td>
-        <img
-          className={styles.card_image}
+        <PlayerCardImage
           src={`https://media.valorant-api.com/playercards/${player.PlayerCardID}/smallart.png`}
-          alt="player in-game card image"
+          borderRadius="50%"
+          padding="0.15rem"
+          minHeight="2rem"
+          minWidth="2rem"
+          height="2rem"
+          width="2rem"
+          boxShadow="0 0 0 0.15rem #ffffff inset"
+          margin="0 1rem 0 0"
+          verticalAlign="middle"
         />
         {player.IsAnonymized ? (
           "Secret Agent"
