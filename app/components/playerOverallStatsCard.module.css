@@ -1,0 +1,22 @@
+.avg_stats_container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem 1.5rem;
+}
+
+.stat_container {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.stat_name {
+    color: #898d94;
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+.stat_value {
+    font-weight: 700;
+    font-size: 0.875rem;
+}
