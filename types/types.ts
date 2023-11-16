@@ -304,7 +304,7 @@ export interface Match {
 
 export interface MMRData {
   currenttier: number;
-  currenttier_patched: string;
+  currenttierpatched: string;
   images: {
     small: string;
     large: string;
