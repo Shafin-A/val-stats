@@ -140,6 +140,8 @@ export const getPlayerAvgStatsForMatch = (
   const avgBodyShotPercentage = (totalBodyShots / totalShots) * 100;
   const avgLegShotPercentage = (totalLegShots / totalShots) * 100;
 
+  const KD = player.stats.kills / player.stats.deaths;
+
   return {
     AvgDamageDeltaForMatch,
     ADRForMatch,
@@ -147,6 +149,7 @@ export const getPlayerAvgStatsForMatch = (
     avgHeadShotPercentage,
     avgBodyShotPercentage,
     avgLegShotPercentage,
+    KD,
   };
 };
 
