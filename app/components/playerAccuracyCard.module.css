@@ -1,0 +1,46 @@
+.accuracy_games_text {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #898d94;
+    text-transform: uppercase;
+}
+
+.accuracy_dummy_container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+
+.accuracy_dummy_container svg {
+    width: 64px;
+    margin: 0 1rem;
+}
+
+.accuracy_values {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* margin: 1.25rem 0; */
+}
+
+.stat_container {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 5rem;
+}
+
+.stat_name {
+    color: #898d94;
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+.greatest_stat {
+    color: #74d5d3;
+}
+
+.stat_value {
+    font-weight: 700;
+    font-size: 0.875rem;
+}
