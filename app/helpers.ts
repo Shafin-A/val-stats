@@ -1,4 +1,4 @@
-import { Match, Player, Round } from "../types/types";
+import { MapData, Match, Map, PlayerAccount, Round } from "../types/types";
 
 export const getKASTForMatch = (
   playerPuuid: string,
@@ -201,4 +201,40 @@ export const formatDate = (timestamp: number) => {
   return `${year}/${month}/${day}, ${formattedHours}:${
     minutes < 10 ? "0" + minutes : minutes
   } ${period}`;
+};
+
+export const getMapAndPlayerData = (
+  recentMatches: Match[],
+  playerAccount: PlayerAccount,
+  maps: Map[]
+) => {
+  const playedAgents = {} as Record<string, number>;
+  const mapData = {} as MapData;
+
+  recentMatches.forEach((match) => {
+    const player = match.players.all_players.find(
+      (p) => p.puuid === playerAccount.puuid
+    );
+
+    if (!player) throw new Error("Could not find player in match!");
+
+    const { character, team } = player;
+    const winningTeam = match.teams.blue.has_won ? "Blue" : "Red";
+    const matchMap = match.metadata.map;
+    const isPlayerOnWinningTeam = team === winningTeam;
+
+    playedAgents[character] = (playedAgents[character] || 0) + 1;
+
+    const matchMapImage = maps.find(
+      (map) => map.displayName.toLowerCase() === matchMap.toLowerCase()
+    )?.listViewIcon;
+
+    if (!mapData.hasOwnProperty(matchMap)) {
+      mapData[matchMap] = { win: 0, loss: 0, imgSrc: matchMapImage };
+    }
+
+    isPlayerOnWinningTeam ? mapData[matchMap].win++ : mapData[matchMap].loss++;
+  });
+
+  return { mapData, playedAgents };
 };

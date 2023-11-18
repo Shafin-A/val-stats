@@ -1,5 +1,6 @@
 import {
   getCompetitiveTiers,
+  getMaps,
   getPlayerAccount,
   getPlayerMMR,
   getPlayerMatches,
@@ -12,6 +13,7 @@ import { PlayerOverallAverageStatsCard } from "../../../components/playerOverall
 import { PlayerTagLine } from "../../../components/playerTagline";
 import {
   getAvgStatsArrayForMatches,
+  getMapAndPlayerData,
   getOverallAverageStats,
 } from "../../../helpers";
 import styles from "./page.module.css";
@@ -44,18 +46,11 @@ const Page = async () => {
     (tier) => tier.tier === peakRankTier
   )!.smallIcon;
 
-  const playedAgents = {} as Record<string, number>;
+  const maps = await getMaps();
 
-  recentMatches.forEach((match) => {
-    const player = match.players.all_players.find(
-      (player) => player.puuid === playerAccount.puuid
-    );
+  const { mapData } = getMapAndPlayerData(recentMatches, playerAccount, maps);
 
-    if (player) {
-      if (player.character in playedAgents) playedAgents[player.character] += 1;
-      else playedAgents[player.character] = 1;
-    }
-  });
+  console.log(mapData);
 
   const avgStatsArray = getAvgStatsArrayForMatches(
     recentMatches,
