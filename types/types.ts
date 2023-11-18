@@ -296,8 +296,8 @@ export interface Match {
   observers: Observer[];
   coaches: Coach[];
   teams: {
-    red: Team[];
-    blue: Team[];
+    red: Team;
+    blue: Team;
   };
   rounds: Round[];
 }
@@ -361,4 +361,36 @@ export interface CompetitiveTiers {
   assetObjectName: string;
   tiers: CompetitiveTier[];
   assetPath: string;
+}
+
+export interface Map {
+  uuid: string;
+  displayName: string;
+  narrativeDescription?: string;
+  tacticalDescription?: string;
+  coordinates?: string;
+  displayIcon?: string;
+  listViewIcon: string;
+  splash: string;
+  assetPath: string;
+  mapUrl: string;
+  xMultiplier: number;
+  yMultiplier: number;
+  xScalarToAdd: number;
+  yScalarToAdd: number;
+  callouts?: Callout[];
+}
+
+export interface Callout {
+  regionName: string;
+  superRegionName: string;
+  location: Location;
+}
+
+export interface MapData {
+  [name: string]: {
+    win: number;
+    loss: number;
+    imgSrc?: string;
+  };
 }

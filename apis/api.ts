@@ -2,6 +2,7 @@ import {
   CompetitiveTiers,
   LeaderboardPlayer,
   MMR,
+  Map,
   Match,
   PlayerAccount,
 } from "../types/types";
@@ -111,7 +112,9 @@ export const getPlayerMMR = async (
   return data as MMR;
 };
 
-export const getCompetitiveTiers = async (uuid: string) => {
+export const getCompetitiveTiers = async (
+  uuid: string
+): Promise<CompetitiveTiers> => {
   const res = await fetch(
     `https://valorant-api.com/v1/competitivetiers/${uuid}`,
     { next: { revalidate: 300 } }
@@ -128,4 +131,22 @@ export const getCompetitiveTiers = async (uuid: string) => {
   }
 
   return data as CompetitiveTiers;
+};
+
+export const getMaps = async (): Promise<Map[]> => {
+  const res = await fetch(`https://valorant-api.com/v1/maps`, {
+    next: { revalidate: 300 },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch maps data");
+  }
+
+  const { status, data } = await res.json();
+
+  if (status !== 200) {
+    throw new Error("Failed to fetch maps data");
+  }
+
+  return data as Map[];
 };
