@@ -342,3 +342,23 @@ export interface MMR {
   };
   by_season: Record<string, SeasonData>;
 }
+
+export interface CompetitiveTier {
+  tier: number;
+  tierName: string;
+  division: string;
+  divisionName: string;
+  color: string;
+  backgroundColor: string;
+  smallIcon: string;
+  largeIcon: string;
+  rankTriangleDownIcon: string;
+  rankTriangleUpIcon: string;
+}
+
+export interface CompetitiveTiers {
+  uuid: string;
+  assetObjectName: string;
+  tiers: CompetitiveTier[];
+  assetPath: string;
+}

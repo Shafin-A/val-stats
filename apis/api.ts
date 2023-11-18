@@ -1,4 +1,10 @@
-import { LeaderboardPlayer, MMR, Match, PlayerAccount } from "../types/types";
+import {
+  CompetitiveTiers,
+  LeaderboardPlayer,
+  MMR,
+  Match,
+  PlayerAccount,
+} from "../types/types";
 
 export const getLeaderboardData = async (
   affinity: string
@@ -103,4 +109,23 @@ export const getPlayerMMR = async (
   }
 
   return data as MMR;
+};
+
+export const getCompetitiveTiers = async (uuid: string) => {
+  const res = await fetch(
+    `https://valorant-api.com/v1/competitivetiers/${uuid}`,
+    { next: { revalidate: 300 } }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch competitive tiers data");
+  }
+
+  const { status, data } = await res.json();
+
+  if (status !== 200) {
+    throw new Error("Failed to fetch competitive tiers data");
+  }
+
+  return data as CompetitiveTiers;
 };
