@@ -2,6 +2,7 @@
 import { AreaChart, Card, Select, SelectItem, Title } from "@tremor/react";
 import { useState } from "react";
 import "./statAreaChartCard.css";
+import { formatDate } from "../helpers";
 
 interface statAreaChartCardProps {
   data: Record<string, number>[];
@@ -15,22 +16,6 @@ const valueFormatter = (number: number, stat: string): string => {
     : stat === "K/D"
     ? number.toFixed(2)
     : number.toFixed(1);
-};
-
-const formatDate = (timestamp: number) => {
-  const date = new Date(timestamp * 1000);
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1; // 0-indexed
-  const day = date.getDate();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-
-  const formattedHours = hours % 12 || 12;
-  const period = hours < 12 ? "AM" : "PM";
-
-  return `${year}/${month}/${day}, ${formattedHours}:${
-    minutes < 10 ? "0" + minutes : minutes
-  } ${period}`;
 };
 
 export const StatAreaChartCard = ({ data }: statAreaChartCardProps) => {

@@ -186,3 +186,19 @@ export const getOverallAverageStats = (
 
   return overallAverageStats;
 };
+
+export const formatDate = (timestamp: number) => {
+  const date = new Date(timestamp * 1000);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // 0-indexed
+  const day = date.getDate();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+
+  const formattedHours = hours % 12 || 12;
+  const period = hours < 12 ? "AM" : "PM";
+
+  return `${year}/${month}/${day}, ${formattedHours}:${
+    minutes < 10 ? "0" + minutes : minutes
+  } ${period}`;
+};
