@@ -153,17 +153,23 @@ export const getPlayerAvgStatsForMatch = (
   };
 };
 
-export const getOverallAverageStats = (
-  playerPuuid: string,
-  matches: Match[]
-) => {
-  const averageStatsForEachMatch = matches.map((match) => {
+export const getAvgStatsArrayForMatches = (
+  matches: Match[],
+  playerPuuid: string
+) =>
+  matches.map((match) => {
     const playerAvgStats = getPlayerAvgStatsForMatch(playerPuuid, match);
     playerAvgStats.KAST = getKASTForMatch(playerPuuid, match.rounds);
+    playerAvgStats.gameStartTime = match.metadata.game_start;
 
     return playerAvgStats;
   });
 
+export const getOverallAverageStats = (
+  averageStatsForEachMatch: Record<string, number>[],
+  matches: Match[]
+) => {
+  // Add stats up into object
   const overallAverageStats = averageStatsForEachMatch.reduce((acc, stats) => {
     for (const stat in stats) {
       acc[stat] = (acc[stat] || 0) + stats[stat];
@@ -173,6 +179,7 @@ export const getOverallAverageStats = (
 
   const numberOfMatches = matches.length;
 
+  // Divide to get average
   for (const stat in overallAverageStats) {
     overallAverageStats[stat] /= numberOfMatches;
   }

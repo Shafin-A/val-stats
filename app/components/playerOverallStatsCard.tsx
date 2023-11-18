@@ -1,4 +1,4 @@
-import { Card } from "./card";
+import { Card } from "@tremor/react";
 import styles from "./playerOverallStatsCard.module.css";
 
 interface playerOverallAverageStatsCardProps {
