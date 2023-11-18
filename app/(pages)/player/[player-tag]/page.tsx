@@ -13,7 +13,7 @@ import { PlayerOverallAverageStatsCard } from "../../../components/playerOverall
 import { PlayerTagLine } from "../../../components/playerTagline";
 import {
   getAvgStatsArrayForMatches,
-  getMapAndPlayerData,
+  getMapsAndAgentsPlayed,
   getOverallAverageStats,
 } from "../../../helpers";
 import styles from "./page.module.css";
@@ -48,9 +48,13 @@ const Page = async () => {
 
   const maps = await getMaps();
 
-  const { mapData } = getMapAndPlayerData(recentMatches, playerAccount, maps);
+  const { mapsPlayed } = getMapsAndAgentsPlayed(
+    recentMatches,
+    playerAccount,
+    maps
+  );
 
-  console.log(mapData);
+  console.log(mapsPlayed);
 
   const avgStatsArray = getAvgStatsArrayForMatches(
     recentMatches,

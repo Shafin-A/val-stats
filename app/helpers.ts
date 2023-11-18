@@ -203,13 +203,13 @@ export const formatDate = (timestamp: number) => {
   } ${period}`;
 };
 
-export const getMapAndPlayerData = (
+export const getMapsAndAgentsPlayed = (
   recentMatches: Match[],
   playerAccount: PlayerAccount,
   maps: Map[]
 ) => {
-  const playedAgents = {} as Record<string, number>;
-  const mapData = {} as MapData;
+  const agentsPlayed = {} as Record<string, number>;
+  const mapsPlayed = {} as MapData;
 
   recentMatches.forEach((match) => {
     const player = match.players.all_players.find(
@@ -223,18 +223,20 @@ export const getMapAndPlayerData = (
     const matchMap = match.metadata.map;
     const isPlayerOnWinningTeam = team === winningTeam;
 
-    playedAgents[character] = (playedAgents[character] || 0) + 1;
+    agentsPlayed[character] = (agentsPlayed[character] || 0) + 1;
 
     const matchMapImage = maps.find(
       (map) => map.displayName.toLowerCase() === matchMap.toLowerCase()
     )?.listViewIcon;
 
-    if (!mapData.hasOwnProperty(matchMap)) {
-      mapData[matchMap] = { win: 0, loss: 0, imgSrc: matchMapImage };
+    if (!mapsPlayed.hasOwnProperty(matchMap)) {
+      mapsPlayed[matchMap] = { win: 0, loss: 0, imgSrc: matchMapImage };
     }
 
-    isPlayerOnWinningTeam ? mapData[matchMap].win++ : mapData[matchMap].loss++;
+    isPlayerOnWinningTeam
+      ? mapsPlayed[matchMap].win++
+      : mapsPlayed[matchMap].loss++;
   });
 
-  return { mapData, playedAgents };
+  return { mapsPlayed, agentsPlayed };
 };
