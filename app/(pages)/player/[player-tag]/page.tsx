@@ -1,4 +1,5 @@
 import {
+  getCompetitiveTiers,
   getPlayerAccount,
   getPlayerMMR,
   getPlayerMatches,
@@ -15,6 +16,7 @@ import {
 } from "../../../helpers";
 import styles from "./page.module.css";
 import { StatAreaChartCard } from "../../../components/statAreaChartCard";
+import { RankRatingCard } from "../../../components/rankRatingCard";
 
 const Page = async () => {
   const playerAccount = await getPlayerAccount("PlzHireMeAsDev", "layof");
@@ -32,6 +34,15 @@ const Page = async () => {
     playerAccount.name,
     playerAccount.tag
   );
+
+  const peakRankTier = playerMMR.highest_rank.tier;
+  const rankUUID = playerMMR.current_data.images.small.split("/")[4];
+
+  const competitiveTiers = await getCompetitiveTiers(rankUUID);
+
+  const peakRankSmallIcon = competitiveTiers.tiers.find(
+    (tier) => tier.tier === peakRankTier
+  )!.smallIcon;
 
   const playedAgents = {} as Record<string, number>;
 
@@ -89,12 +100,12 @@ const Page = async () => {
               <option>123</option>
             </select>
           </Card>
-          <Card>
-            Current Rating
-            <img src={playerMMR.current_data.images.small} />
-            {playerMMR.current_data.currenttierpatched}
-            {/* Peak Rating */}
-          </Card>
+          <RankRatingCard
+            currentRating={playerMMR.current_data.currenttierpatched}
+            currentRatingImgSrc={playerMMR.current_data.images.small}
+            peakRating={playerMMR.highest_rank.patched_tier}
+            peakRatingImgSrc={peakRankSmallIcon}
+          />
           <PlayerOverallAverageStatsCard
             overallAverageStats={overallAverageStats}
           />

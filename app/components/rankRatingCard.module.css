@@ -1,0 +1,33 @@
+.ratings_container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.rating_container {
+    text-align: center;
+}
+
+.rating_container>* {
+    display: block;
+    margin: 0.75rem auto;
+}
+
+.rating_title {
+    color: #898d94;
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+.rating {
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+.vertical_line {
+    border-left: 1px solid #898d94;
+    align-self: stretch;
+    width: 1px;
+    display: block;
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+}
