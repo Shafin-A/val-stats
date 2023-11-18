@@ -5,6 +5,7 @@
 
 .rating_container {
     text-align: center;
+    width: 100%;
 }
 
 .rating_container>* {
