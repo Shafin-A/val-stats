@@ -19,6 +19,7 @@ import {
 import styles from "./page.module.css";
 import { StatAreaChartCard } from "../../../components/statAreaChartCard";
 import { RankRatingCard } from "../../../components/rankRatingCard";
+import { MapsCard } from "../../../components/mapsCard";
 
 const Page = async () => {
   const playerAccount = await getPlayerAccount("PlzHireMeAsDev", "layof");
@@ -121,7 +122,7 @@ const Page = async () => {
             )}
           />
           <StatAreaChartCard data={avgStatsArray} />
-          <Card>Maps??</Card>
+          <MapsCard mapsData={mapsPlayed} />
         </div>
 
         <div className={styles.matches_container}>
