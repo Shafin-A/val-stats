@@ -20,7 +20,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* margin: 1.25rem 0; */
 }
 
 .stat_container {

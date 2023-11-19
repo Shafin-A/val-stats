@@ -49,7 +49,7 @@ export const StatAreaChartCard = ({ data }: statAreaChartCardProps) => {
 
   return (
     <Card>
-      <div className="max-w-sm mx-auto space-y-6">
+      <div className="max-w-sm mx-auto mb-4 space-y-6">
         <Select
           value={value}
           onValueChange={setValue}
@@ -63,9 +63,9 @@ export const StatAreaChartCard = ({ data }: statAreaChartCardProps) => {
           ))}
         </Select>
       </div>
-      <Title className="mt-4">Avg {value} per games</Title>
+      <span className="chart-title">Avg {value} per games</span>
       <AreaChart
-        className="h-52 mt-4"
+        className="h-52"
         data={updatedData}
         index="gameStartTime"
         categories={[value]}
