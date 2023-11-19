@@ -1,4 +1,4 @@
-import { Card, Title } from "@tremor/react";
+import { Card } from "@tremor/react";
 import { MapData } from "../../types/types";
 import styles from "./mapsCard.module.css";
 
