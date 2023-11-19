@@ -1,25 +1,25 @@
-.ratings_container {
+.ranks_container {
     display: flex;
     justify-content: space-around;
 }
 
-.rating_container {
+.rank_container {
     text-align: center;
     width: 100%;
 }
 
-.rating_container>* {
+.rank_container>* {
     display: block;
     margin: 0.75rem auto;
 }
 
-.rating_title {
+.rank_title {
     color: #898d94;
     font-weight: 500;
     font-size: 0.75rem;
 }
 
-.rating {
+.rank {
     font-weight: 700;
     font-size: 0.875rem;
 }

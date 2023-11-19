@@ -2,47 +2,47 @@ import { Card } from "@tremor/react";
 import styles from "./rankRatingCard.module.css";
 
 interface rankRatingCardProps {
-  currentRating: string;
-  currentRatingImgSrc: string;
-  peakRating: string;
-  peakRatingImgSrc: string;
+  currentRank: string;
+  currentRankImgSrc: string;
+  peakRank: string;
+  peakRankImgSrc: string;
 }
 
 interface rankRatingProps {
-  ratingTitle: string;
+  rankTitle: string;
   imgSrc: string;
-  rating: string;
+  rank: string;
 }
 
-const RankRating = ({ ratingTitle, imgSrc, rating }: rankRatingProps) => {
+const RankRating = ({ rankTitle, imgSrc, rank }: rankRatingProps) => {
   return (
-    <div className={styles.rating_container}>
-      <span className={styles.rating_title}>{ratingTitle}</span>
+    <div className={styles.rank_container}>
+      <span className={styles.rank_title}>{rankTitle}</span>
       <img src={imgSrc} />
-      <span className={styles.rating}>{rating}</span>
+      <span className={styles.rank}>{rank}</span>
     </div>
   );
 };
 
 export const RankRatingCard = ({
-  currentRating,
-  currentRatingImgSrc,
-  peakRating,
-  peakRatingImgSrc,
+  currentRank,
+  currentRankImgSrc,
+  peakRank,
+  peakRankImgSrc,
 }: rankRatingCardProps) => {
   return (
     <Card>
-      <div className={styles.ratings_container}>
+      <div className={styles.ranks_container}>
         <RankRating
-          ratingTitle={"CURRENT RATING"}
-          imgSrc={currentRatingImgSrc}
-          rating={currentRating}
+          rankTitle={"CURRENT RANK"}
+          imgSrc={currentRankImgSrc}
+          rank={currentRank}
         />
         <div className={styles.vertical_line}></div>
         <RankRating
-          ratingTitle={"PEAK RATING"}
-          imgSrc={peakRatingImgSrc}
-          rating={peakRating}
+          rankTitle={"PEAK RANK"}
+          imgSrc={peakRankImgSrc}
+          rank={peakRank}
         />
       </div>
     </Card>

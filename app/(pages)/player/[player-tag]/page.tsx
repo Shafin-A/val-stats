@@ -91,10 +91,10 @@ const Page = async () => {
             </select>
           </Card>
           <RankRatingCard
-            currentRating={playerMMR.current_data.currenttierpatched}
-            currentRatingImgSrc={playerMMR.current_data.images.small}
-            peakRating={playerMMR.highest_rank.patched_tier}
-            peakRatingImgSrc={peakRankSmallIcon}
+            currentRank={playerMMR.current_data.currenttierpatched}
+            currentRankImgSrc={playerMMR.current_data.images.small}
+            peakRank={playerMMR.highest_rank.patched_tier}
+            peakRankImgSrc={peakRankSmallIcon}
           />
           <PlayerOverallAverageStatsCard
             overallAverageStats={overallAverageStats}
