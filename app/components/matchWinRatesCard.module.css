@@ -1,0 +1,51 @@
+.win_rates_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.win_rates {
+    display: flex;
+    justify-content: space-between;
+}
+
+.win_rates_stats {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat_top_text {
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+.stat_bottom_text {
+    color: #898d94;
+    font-weight: 500;
+    font-size: 0.75rem;
+}
+
+.win {
+    color: #74d5d3;
+}
+
+.loss {
+    color: #df3a3a;
+}
+
+.win_rate_bar {
+    display: flex;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.win_rate_bar_win {
+    background: #74d5d3;
+    border-radius: 3px;
+    height: 2px;
+}
+
+.win_rate_bar_loss {
+    background: #df3a3a;
+    border-radius: 3px;
+    height: 2px;
+}

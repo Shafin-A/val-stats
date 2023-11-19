@@ -20,6 +20,7 @@ import styles from "./page.module.css";
 import { StatAreaChartCard } from "../../../components/statAreaChartCard";
 import { RankRatingCard } from "../../../components/rankRatingCard";
 import { MapsCard } from "../../../components/mapsCard";
+import { MatchWinRatesCard } from "../../../components/matchWinRatesCard";
 
 const Page = async () => {
   const playerAccount = await getPlayerAccount("PlzHireMeAsDev", "layof");
@@ -115,7 +116,7 @@ const Page = async () => {
         </div>
 
         <div className={styles.matches_container}>
-          <Card>Agents DEETS</Card>
+          <MatchWinRatesCard mapsData={mapsPlayed} />
           <Card>Match Histyory</Card>
         </div>
       </div>
