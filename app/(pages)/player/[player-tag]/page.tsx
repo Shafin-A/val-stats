@@ -55,8 +55,6 @@ const Page = async () => {
     maps
   );
 
-  console.log(mapsPlayed);
-
   const avgStatsArray = getAvgStatsArrayForMatches(
     recentMatches,
     playerAccount.puuid
@@ -66,18 +64,6 @@ const Page = async () => {
     avgStatsArray,
     recentMatches
   );
-
-  console.log(`
-  Stats across ${recentMatches.length} matches
-  KAST      = ${overallAverageStats.KAST}
-  ADD       = ${overallAverageStats.AvgDamageDeltaForMatch}
-  ACS       = ${overallAverageStats.ACSForMatch}
-  ADR       = ${overallAverageStats.ADRForMatch}
-  Headshot% = ${overallAverageStats.avgHeadShotPercentage}
-  Bodyshot% = ${overallAverageStats.avgBodyShotPercentage}
-  Legshot%  = ${overallAverageStats.avgLegShotPercentage}
-  KD        = ${overallAverageStats.KD}
-  `);
 
   return (
     <div className={styles.page_container}>
