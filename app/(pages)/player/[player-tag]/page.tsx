@@ -68,7 +68,10 @@ const Page = async () => {
   return (
     <div className={styles.page_container}>
       <div className={styles.image_name_container}>
-        <PlayerCardImage src={playerAccount.card.small} />
+        <PlayerCardImage
+          src={playerAccount.card.small}
+          boxShadow="0 0 0 0.25rem #2f2f2f inset"
+        />
         <div>
           <PlayerGameName
             gameName={playerAccount.name}
