@@ -20,7 +20,7 @@ export const PlayerOverallAverageStatsCard = ({
         <span className={styles.stat_name}>KAST</span>
         <span
           className={styles.stat_value}
-        >{`${overallAverageStats.KAST.toFixed(1)}`}</span>
+        >{`${overallAverageStats.KAST.toFixed(1)}%`}</span>
       </div>
       <div className={styles.stat_container}>
         <span className={styles.stat_name}>DDΔ</span>
@@ -44,7 +44,7 @@ export const PlayerOverallAverageStatsCard = ({
       <div className={styles.stat_container}>
         <span className={styles.stat_name}>HSP</span>
         <span className={styles.stat_value}>
-          {`${overallAverageStats.avgHeadShotPercentage.toFixed(1)}`}
+          {`${overallAverageStats.avgHeadShotPercentage.toFixed(1)}%`}
         </span>
       </div>
     </div>
