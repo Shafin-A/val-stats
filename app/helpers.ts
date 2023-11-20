@@ -1,4 +1,11 @@
-import { MapData, Match, Map, PlayerAccount, Round } from "../types/types";
+import {
+  MapData,
+  Match,
+  Map,
+  PlayerAccount,
+  Round,
+  Agent,
+} from "../types/types";
 
 export const getKASTForMatch = (
   playerPuuid: string,
@@ -239,4 +246,14 @@ export const getMapsAndAgentsPlayed = (
   });
 
   return { mapsPlayed, agentsPlayed };
+};
+
+export const getAgentImg = (agentName: string, agents: Agent[]) => {
+  const imgSrc = agents.find(
+    (agent) => agent.displayName === agentName
+  )?.displayIconSmall;
+
+  if (!imgSrc) throw new Error("Could not find agent!");
+
+  return imgSrc;
 };

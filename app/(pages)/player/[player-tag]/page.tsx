@@ -1,11 +1,11 @@
 import {
+  getAgents,
   getCompetitiveTiers,
   getMaps,
   getPlayerAccount,
   getPlayerMMR,
   getPlayerMatches,
 } from "../../../../apis/api";
-import { Card } from "@tremor/react";
 import { PlayerAccuracyCard } from "../../../components/playerAccuracyCard";
 import { PlayerCardImage } from "../../../components/playerCardImage";
 import { PlayerGameName } from "../../../components/playerGameName";
@@ -22,6 +22,7 @@ import { RankRatingCard } from "../../../components/rankRatingCard";
 import { MapsCard } from "../../../components/mapsCard";
 import { MatchWinRatesCard } from "../../../components/matchWinRatesCard";
 import { GameModeSelectCard } from "../../../components/gameModeSelectCard";
+import { RecentMatchesCard } from "../../../components/recentMatchesCard";
 
 const Page = async () => {
   const playerAccount = await getPlayerAccount("PlzHireMeAsDev", "layof");
@@ -50,6 +51,8 @@ const Page = async () => {
   )!.smallIcon;
 
   const maps = await getMaps();
+
+  const agents = await getAgents();
 
   const { mapsPlayed } = getMapsAndAgentsPlayed(
     recentMatches,
@@ -113,7 +116,12 @@ const Page = async () => {
 
         <div className={styles.matches_container}>
           <MatchWinRatesCard mapsData={mapsPlayed} />
-          <Card>Match Histyory</Card>
+          <RecentMatchesCard
+            playerPuuid={playerAccount.puuid}
+            recentMatches={recentMatches}
+            agents={agents}
+            matchesStats={avgStatsArray}
+          />
         </div>
       </div>
     </div>
