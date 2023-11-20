@@ -1,7 +1,7 @@
 import styles from "./leaderboardCard.module.css";
-import { PlayerCardImage } from "./playerCardImage";
-import { PlayerGameName } from "./playerGameName";
-import { PlayerTagLine } from "./playerTagline";
+import { PlayerCardImage } from "../playerCardImage";
+import { PlayerGameName } from "../playerGameName";
+import { PlayerTagLine } from "../playerTagline";
 
 interface LeaderboardCardProps {
   playerCardID: string;

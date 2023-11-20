@@ -4,7 +4,7 @@ import ValorantLogo from "../../../assets/valorant.svg";
 import { getAllLeaderboardData } from "../../../apis/api";
 import { Suspense } from "react";
 import { LeaderboardPlayer } from "../../../types/types";
-import { LeaderboardCard } from "../../components/leaderboardCard";
+import { LeaderboardCard } from "../../components/leaderboard/leaderboardCard";
 
 export const REGIONS = {
   NA: "na",

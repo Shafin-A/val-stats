@@ -1,5 +1,5 @@
 import { Card } from "@tremor/react";
-import { MapData } from "../../types/types";
+import { MapData } from "../../../types/types";
 import styles from "./matchWinRatesCard.module.css";
 
 interface matchWinRatesCardProps {

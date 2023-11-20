@@ -6,10 +6,10 @@ import {
   getPlayerMMR,
   getPlayerMatches,
 } from "../../../../apis/api";
-import { PlayerAccuracyCard } from "../../../components/playerAccuracyCard";
+import { PlayerAccuracyCard } from "../../../components/cards/playerAccuracyCard";
 import { PlayerCardImage } from "../../../components/playerCardImage";
 import { PlayerGameName } from "../../../components/playerGameName";
-import { PlayerOverallAverageStatsCard } from "../../../components/playerOverallStatsCard";
+import { PlayerOverallAverageStatsCard } from "../../../components/cards/playerOverallStatsCard";
 import { PlayerTagLine } from "../../../components/playerTagline";
 import {
   getAvgStatsArrayForMatches,
@@ -17,12 +17,12 @@ import {
   getOverallAverageStats,
 } from "../../../helpers";
 import styles from "./page.module.css";
-import { StatAreaChartCard } from "../../../components/statAreaChartCard";
-import { RankRatingCard } from "../../../components/rankRatingCard";
-import { MapsCard } from "../../../components/mapsCard";
-import { MatchWinRatesCard } from "../../../components/matchWinRatesCard";
-import { GameModeSelectCard } from "../../../components/gameModeSelectCard";
-import { RecentMatchesCard } from "../../../components/recentMatchesCard";
+import { StatAreaChartCard } from "../../../components/cards/statAreaChartCard";
+import { RankRatingCard } from "../../../components/cards/rankRatingCard";
+import { MapsCard } from "../../../components/cards/mapsCard";
+import { MatchWinRatesCard } from "../../../components/cards/matchWinRatesCard";
+import { GameModeSelectCard } from "../../../components/cards/gameModeSelectCard";
+import { RecentMatchesCard } from "../../../components/cards/recentMatchesCard";
 
 const Page = async () => {
   const playerAccount = await getPlayerAccount("PlzHireMeAsDev", "layof");

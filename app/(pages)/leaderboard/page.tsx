@@ -1,6 +1,6 @@
 import { getAllLeaderboardData } from "../../../apis/api";
 import { REGIONS } from "../search/page";
-import { LeaderboardTable } from "../../components/leaderboardTable";
+import { LeaderboardTable } from "../../components/leaderboard/leaderboardTable";
 
 const Page = async () => {
   const leaderboardData = await getAllLeaderboardData(Object.values(REGIONS));

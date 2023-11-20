@@ -1,6 +1,6 @@
 import { Card } from "@tremor/react";
-import { formatDate, getAgentImg } from "../helpers";
-import { Agent, Match } from "../../types/types";
+import { formatDate, getAgentImg } from "../../helpers";
+import { Agent, Match } from "../../../types/types";
 
 interface recentMatchesProps {
   recentMatches: Match[];

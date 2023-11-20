@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { LeaderboardPlayer } from "../../types/types";
+import { LeaderboardPlayer } from "../../../types/types";
 import styles from "./leaderboardTable.module.css";
-import { PlayerTagLine } from "./playerTagline";
+import { PlayerTagLine } from "../playerTagline";
 import { Pagination } from "./pagination";
-import { REGIONS } from "../(pages)/search/page";
+import { REGIONS } from "../../(pages)/search/page";
 import { useSearchParams, useRouter } from "next/navigation";
-import { PlayerGameName } from "./playerGameName";
-import { PlayerCardImage } from "./playerCardImage";
+import { PlayerGameName } from "../playerGameName";
+import { PlayerCardImage } from "../playerCardImage";
 
 interface LeaderboardTableProps {
   leaderboardData: Record<string, LeaderboardPlayer[]>;

@@ -2,7 +2,7 @@
 import { AreaChart, Card, Select, SelectItem, Title } from "@tremor/react";
 import { useState } from "react";
 import "./statAreaChartCard.css";
-import { formatDate } from "../helpers";
+import { formatDate } from "../../helpers";
 
 interface statAreaChartCardProps {
   data: Record<string, number>[];

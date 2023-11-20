@@ -1,5 +1,5 @@
 import { Card } from "@tremor/react";
-import AccuracyDummy from "../components/accuracyDummy";
+import AccuracyDummy from "../accuracyDummy";
 import styles from "./playerAccuracyCard.module.css";
 
 interface playerAccuracyCardProps {
