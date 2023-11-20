@@ -24,8 +24,13 @@ import { MatchWinRatesCard } from "../../../components/cards/matchWinRatesCard";
 import { GameModeSelectCard } from "../../../components/cards/gameModeSelectCard";
 import { RecentMatchesCard } from "../../../components/cards/recentMatchesCard";
 
-const Page = async () => {
-  const playerAccount = await getPlayerAccount("PlzHireMeAsDev", "layof");
+const Page = async ({ params }: { params: { playerTag: string } }) => {
+  const playerNameTag = decodeURIComponent(params.playerTag).split("#");
+
+  const playerAccount = await getPlayerAccount(
+    playerNameTag[0],
+    playerNameTag[1]
+  );
 
   const recentMatches = await getPlayerMatches(
     playerAccount.region,
@@ -41,13 +46,13 @@ const Page = async () => {
     playerAccount.tag
   );
 
-  const peakRankTier = playerMMR.highest_rank.tier;
+  const peakRankTier = playerMMR.highest_rank.patched_tier;
   const rankUUID = playerMMR.current_data.images.small.split("/")[4];
 
   const competitiveTiers = await getCompetitiveTiers(rankUUID);
 
   const peakRankSmallIcon = competitiveTiers.tiers.find(
-    (tier) => tier.tier === peakRankTier
+    (tier) => tier.tierName.toLowerCase() === peakRankTier.toLowerCase()
   )!.smallIcon;
 
   const maps = await getMaps();
