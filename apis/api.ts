@@ -1,4 +1,5 @@
 import {
+  Agent,
   CompetitiveTiers,
   LeaderboardPlayer,
   MMR,
@@ -149,4 +150,25 @@ export const getMaps = async (): Promise<Map[]> => {
   }
 
   return data as Map[];
+};
+
+export const getAgents = async (): Promise<Agent[]> => {
+  const res = await fetch(
+    `https://valorant-api.com/v1/agents?isPlayableCharacter=true`,
+    {
+      next: { revalidate: 300 },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch agents data");
+  }
+
+  const { status, data } = await res.json();
+
+  if (status !== 200) {
+    throw new Error("Failed to fetch agents data");
+  }
+
+  return data as Agent[];
 };
