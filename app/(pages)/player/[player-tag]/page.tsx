@@ -21,6 +21,7 @@ import { StatAreaChartCard } from "../../../components/statAreaChartCard";
 import { RankRatingCard } from "../../../components/rankRatingCard";
 import { MapsCard } from "../../../components/mapsCard";
 import { MatchWinRatesCard } from "../../../components/matchWinRatesCard";
+import { GameModeSelectCard } from "../../../components/gameModeSelectCard";
 
 const Page = async () => {
   const playerAccount = await getPlayerAccount("PlzHireMeAsDev", "layof");
@@ -84,12 +85,7 @@ const Page = async () => {
       </div>
       <div className={styles.stats_container}>
         <div className={styles.sidebar_container}>
-          <Card>
-            Game Mode
-            <select>
-              <option>123</option>
-            </select>
-          </Card>
+          <GameModeSelectCard />
           <RankRatingCard
             currentRank={playerMMR.current_data.currenttierpatched}
             currentRankImgSrc={playerMMR.current_data.images.small}

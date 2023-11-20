@@ -1,0 +1,10 @@
+.game_mode_title {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #898d94;
+    text-transform: uppercase;
+}
+
+.game_mode_select {
+    margin-top: 1rem;
+}
