@@ -36,3 +36,7 @@
     gap: 0.75rem;
     flex: 2;
 }
+
+.skeleton_circle {
+    margin-right: 1rem;
+}

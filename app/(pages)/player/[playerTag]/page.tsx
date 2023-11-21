@@ -23,33 +23,32 @@ const Page = async ({ params }: { params: { playerTag: string } }) => {
       <div className={styles.image_name_container}>
         <Suspense
           fallback={
-            <Card>
-              <Skeleton baseColor="gray" />
-            </Card>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Skeleton
+                baseColor="gray"
+                circle={true}
+                height={60}
+                width={60}
+                containerClassName={styles.skeleton_circle}
+              />
+              <Skeleton baseColor="gray" height={36} width={200} />
+            </div>
           }
         >
           <PlayerCardImage
             playerNameTag={playerNameTag}
             boxShadow="0 0 0 0.25rem #2f2f2f inset"
           />
-        </Suspense>
 
-        <div>
-          <Suspense
-            fallback={
-              <Card>
-                <Skeleton baseColor="gray" />
-              </Card>
-            }
-          >
+          <div>
             <PlayerGameName
               playerNameTag={playerNameTag}
               fontSize="2rem"
               fontWeight="500"
             />{" "}
             <PlayerTagLine playerNameTag={playerNameTag} fontSize="1.825rem" />
-          </Suspense>
-        </div>
+          </div>
+        </Suspense>
       </div>
       <div className={styles.stats_container}>
         <div className={styles.sidebar_container}>
@@ -113,7 +112,7 @@ const Page = async ({ params }: { params: { playerTag: string } }) => {
           <Suspense
             fallback={
               <Card>
-                <Skeleton baseColor="gray" count={15} />
+                <Skeleton baseColor="gray" count={40} />
               </Card>
             }
           >
