@@ -117,8 +117,7 @@ export const getCompetitiveTiers = async (
   uuid: string
 ): Promise<CompetitiveTiers> => {
   const res = await fetch(
-    `https://valorant-api.com/v1/competitivetiers/${uuid}`,
-    { next: { revalidate: 300 } }
+    `https://valorant-api.com/v1/competitivetiers/${uuid}`
   );
 
   if (!res.ok) {
@@ -135,9 +134,7 @@ export const getCompetitiveTiers = async (
 };
 
 export const getMaps = async (): Promise<Map[]> => {
-  const res = await fetch(`https://valorant-api.com/v1/maps`, {
-    next: { revalidate: 300 },
-  });
+  const res = await fetch(`https://valorant-api.com/v1/maps`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch maps data");
@@ -154,10 +151,7 @@ export const getMaps = async (): Promise<Map[]> => {
 
 export const getAgents = async (): Promise<Agent[]> => {
   const res = await fetch(
-    `https://valorant-api.com/v1/agents?isPlayableCharacter=true`,
-    {
-      next: { revalidate: 300 },
-    }
+    `https://valorant-api.com/v1/agents?isPlayableCharacter=true`
   );
 
   if (!res.ok) {
