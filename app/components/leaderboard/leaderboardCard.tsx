@@ -25,7 +25,10 @@ export const LeaderboardCard = ({
   const playerCardIdSrc = `https://media.valorant-api.com/playercards/${playerCardID}/smallart.png`;
   return (
     <div className={styles.card_container}>
-      <a className={styles.card_player_link} href="#">
+      <a
+        className={styles.card_player_link}
+        href={`/player/${encodeURIComponent(`${gameName}#${tagLine}`)}`}
+      >
         <div className={styles.leaderboard_rank}>
           <div className={styles.leaderboard_rank_text}>
             <sup>#</sup>
