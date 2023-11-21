@@ -1,14 +1,13 @@
-"use client";
-import { AreaChart, Card, Select, SelectItem, Title } from "@tremor/react";
-import { useState } from "react";
 import "./statAreaChartCard.css";
-import { formatDate } from "../../helpers";
+import { formatDate, getAvgStatsArrayForMatches } from "../../helpers";
+import { getPlayerAccount, getPlayerMatches } from "../../../apis/api";
+import { StatAreaChartCardClient } from "./statAreaChartCardClient";
 
 interface statAreaChartCardProps {
-  data: Record<string, number>[];
+  playerNameTag: string[];
 }
 
-const valueFormatter = (number: number, stat: string): string => {
+export const valueFormatter = (number: number, stat: string): string => {
   return stat === "HSP"
     ? number.toFixed(1) + "%"
     : stat === "DDΔ"
@@ -18,7 +17,9 @@ const valueFormatter = (number: number, stat: string): string => {
     : number.toFixed(1);
 };
 
-export const StatAreaChartCard = ({ data }: statAreaChartCardProps) => {
+export const StatAreaChartCard = async ({
+  playerNameTag,
+}: statAreaChartCardProps) => {
   const statShortNames = {
     AvgDamageDeltaForMatch: "DDΔ",
     ADRForMatch: "ADR",
@@ -28,8 +29,26 @@ export const StatAreaChartCard = ({ data }: statAreaChartCardProps) => {
     KAST: "KAST",
   } as Record<string, string>;
 
+  const playerAccount = await getPlayerAccount(
+    playerNameTag[0],
+    playerNameTag[1]
+  );
+
+  const recentMatches = await getPlayerMatches(
+    playerAccount.region,
+    playerAccount.name,
+    playerAccount.tag,
+    10,
+    "competitive"
+  );
+
+  const avgStatsArray = getAvgStatsArrayForMatches(
+    recentMatches,
+    playerAccount.puuid
+  );
+
   // Process and format data for chart
-  const updatedData = data
+  const updatedData = avgStatsArray
     .map((record) => {
       const updatedRecord = Object.keys(record).reduce((acc, oldKey) => {
         const newKey = statShortNames[oldKey] || oldKey; // Use short names for display on chart
@@ -45,34 +64,6 @@ export const StatAreaChartCard = ({ data }: statAreaChartCardProps) => {
     .reverse(); // Original data is sorted latest game -> oldest game, x-axis would be backwards
 
   const stats = Object.values(statShortNames);
-  const [value, setValue] = useState(stats[3]);
 
-  return (
-    <Card>
-      <div className="max-w-sm mx-auto mb-4 space-y-6">
-        <Select
-          value={value}
-          onValueChange={setValue}
-          defaultValue={stats[3]}
-          enableClear={false}
-        >
-          {stats.map((stat) => (
-            <SelectItem key={stat} value={stat}>
-              {stat}
-            </SelectItem>
-          ))}
-        </Select>
-      </div>
-      <span className="chart-title">Avg {value} per games</span>
-      <AreaChart
-        className="h-52"
-        data={updatedData}
-        index="gameStartTime"
-        categories={[value]}
-        colors={["red"]}
-        valueFormatter={(num) => valueFormatter(num, value)}
-        showXAxis={false}
-      />
-    </Card>
-  );
+  return <StatAreaChartCardClient data={updatedData} stats={stats} />;
 };

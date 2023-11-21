@@ -1,7 +1,9 @@
+import { getPlayerAccount } from "../../apis/api";
 import styles from "./playerCardImage.module.css";
 
 interface playerCardImageProps {
-  src: string;
+  src?: string;
+  playerNameTag?: string[];
   borderRadius?: string;
   padding?: string;
   minHeight?: string;
@@ -14,8 +16,9 @@ interface playerCardImageProps {
   verticalAlign?: string;
 }
 
-export const PlayerCardImage = ({
+export const PlayerCardImage = async ({
   src,
+  playerNameTag,
   borderRadius,
   padding,
   minHeight,
@@ -38,11 +41,21 @@ export const PlayerCardImage = ({
     verticalAlign,
   };
 
+  let imgSrc = src;
+  if (playerNameTag) {
+    const playerAccount = await getPlayerAccount(
+      playerNameTag[0],
+      playerNameTag[1]
+    );
+
+    imgSrc = playerAccount.card.small;
+  }
+
   return (
     <img
       className={styles.card_image}
       style={componentStyle}
-      src={src}
+      src={imgSrc}
       alt="player in-game card image"
     />
   );

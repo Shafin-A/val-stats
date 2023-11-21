@@ -1,13 +1,18 @@
 import { Badge, Card } from "@tremor/react";
-import { formatDate, getAgentImg } from "../../helpers";
-import { Agent, Match } from "../../../types/types";
+import {
+  formatDate,
+  getAgentImg,
+  getAvgStatsArrayForMatches,
+} from "../../helpers";
 import styles from "./recentMatchesCard.module.css";
+import {
+  getAgents,
+  getPlayerAccount,
+  getPlayerMatches,
+} from "../../../apis/api";
 
 interface recentMatchesProps {
-  recentMatches: Match[];
-  playerPuuid: string;
-  agents: Agent[];
-  matchesStats: Record<string, number>[];
+  playerNameTag: string[];
 }
 
 interface matchPositionBadge {
@@ -31,12 +36,29 @@ const MatchPositionBadge = ({ position }: matchPositionBadge) => {
   );
 };
 
-export const RecentMatchesCard = ({
-  recentMatches,
-  playerPuuid,
-  agents,
-  matchesStats,
+export const RecentMatchesCard = async ({
+  playerNameTag,
 }: recentMatchesProps) => {
+  const playerAccount = await getPlayerAccount(
+    playerNameTag[0],
+    playerNameTag[1]
+  );
+
+  const recentMatches = await getPlayerMatches(
+    playerAccount.region,
+    playerAccount.name,
+    playerAccount.tag,
+    10,
+    "competitive"
+  );
+
+  const matchesStats = getAvgStatsArrayForMatches(
+    recentMatches,
+    playerAccount.puuid
+  );
+
+  const agents = await getAgents();
+
   return (
     <Card>
       {recentMatches.map((match, index) => {
@@ -45,7 +67,7 @@ export const RecentMatchesCard = ({
         );
 
         const playerIndex = allPlayersSortedByACS.findIndex(
-          (matchPlayer) => matchPlayer.puuid === playerPuuid
+          (matchPlayer) => matchPlayer.puuid === playerAccount.puuid
         );
 
         if (playerIndex === -1)
@@ -60,10 +82,6 @@ export const RecentMatchesCard = ({
         const assists = player.stats.assists;
 
         const { character: agentPlayed, team: playerTeam } = player;
-        const matchScore =
-          playerTeam === "Blue"
-            ? `${match.teams.blue.rounds_won} : ${match.teams.red.rounds_won}`
-            : `${match.teams.red.rounds_won} : ${match.teams.blue.rounds_won}`;
 
         const agentImg = getAgentImg(agentPlayed, agents);
 

@@ -1,9 +1,10 @@
 import { Card } from "@tremor/react";
-import { MapData } from "../../../types/types";
 import styles from "./mapsCard.module.css";
+import { getMaps, getPlayerAccount, getPlayerMatches } from "../../../apis/api";
+import { getMapsAndAgentsPlayed } from "../../helpers";
 
 interface mapsCardProps {
-  mapsData: MapData;
+  playerNameTag: string[];
 }
 
 interface mapDetailProps {
@@ -37,17 +38,35 @@ const MapDetail = ({ mapName, stats }: mapDetailProps) => {
   );
 };
 
-export const MapsCard = ({ mapsData }: mapsCardProps) => {
-  const numGames = Object.values(mapsData).reduce((acc, map) => {
-    acc += map.win + map.loss;
-    return acc;
-  }, 0);
+export const MapsCard = async ({ playerNameTag }: mapsCardProps) => {
+  const playerAccount = await getPlayerAccount(
+    playerNameTag[0],
+    playerNameTag[1]
+  );
+
+  const recentMatches = await getPlayerMatches(
+    playerAccount.region,
+    playerAccount.name,
+    playerAccount.tag,
+    10,
+    "competitive"
+  );
+
+  const maps = await getMaps();
+
+  const { mapsPlayed } = getMapsAndAgentsPlayed(
+    recentMatches,
+    playerAccount,
+    maps
+  );
+
+  const numGames = recentMatches.length;
 
   return (
     <Card>
       <span className={styles.map_title}>Maps - Last {numGames} games</span>
       <div className={styles.maps_container}>
-        {Object.entries(mapsData).map(([mapName, stats]) => (
+        {Object.entries(mapsPlayed).map(([mapName, stats]) => (
           <MapDetail key={mapName} mapName={mapName} stats={stats} />
         ))}
       </div>

@@ -1,9 +1,10 @@
 import { Card } from "@tremor/react";
-import { MapData } from "../../../types/types";
 import styles from "./matchWinRatesCard.module.css";
+import { getMaps, getPlayerAccount, getPlayerMatches } from "../../../apis/api";
+import { getMapsAndAgentsPlayed } from "../../helpers";
 
 interface matchWinRatesCardProps {
-  mapsData: MapData;
+  playerNameTag: string[];
 }
 
 interface winRateStatProps {
@@ -35,8 +36,31 @@ const WinRateBar = ({ winPercentage }: winRateBarProps) => (
   </div>
 );
 
-export const MatchWinRatesCard = ({ mapsData }: matchWinRatesCardProps) => {
-  const winLosses = Object.values(mapsData).reduce(
+export const MatchWinRatesCard = async ({
+  playerNameTag,
+}: matchWinRatesCardProps) => {
+  const playerAccount = await getPlayerAccount(
+    playerNameTag[0],
+    playerNameTag[1]
+  );
+
+  const recentMatches = await getPlayerMatches(
+    playerAccount.region,
+    playerAccount.name,
+    playerAccount.tag,
+    10,
+    "competitive"
+  );
+
+  const maps = await getMaps();
+
+  const { mapsPlayed } = getMapsAndAgentsPlayed(
+    recentMatches,
+    playerAccount,
+    maps
+  );
+
+  const winLosses = Object.values(mapsPlayed).reduce(
     (acc, map) => {
       acc.wins += map.win;
       acc.losses += map.loss;

@@ -1,20 +1,54 @@
 import { Card } from "@tremor/react";
 import AccuracyDummy from "../accuracyDummy";
 import styles from "./playerAccuracyCard.module.css";
+import { getPlayerAccount, getPlayerMatches } from "../../../apis/api";
+import {
+  getAvgStatsArrayForMatches,
+  getOverallAverageStats,
+} from "../../helpers";
 
 interface playerAccuracyCardProps {
-  numGames: number;
-  headPercent: number;
-  bodyPercent: number;
-  legsPercent: number;
+  playerNameTag: string[];
 }
 
-export const PlayerAccuracyCard = ({
-  numGames,
-  headPercent,
-  bodyPercent,
-  legsPercent,
+export const PlayerAccuracyCard = async ({
+  playerNameTag,
 }: playerAccuracyCardProps) => {
+  const playerAccount = await getPlayerAccount(
+    playerNameTag[0],
+    playerNameTag[1]
+  );
+
+  const recentMatches = await getPlayerMatches(
+    playerAccount.region,
+    playerAccount.name,
+    playerAccount.tag,
+    10,
+    "competitive"
+  );
+
+  const avgStatsArray = getAvgStatsArrayForMatches(
+    recentMatches,
+    playerAccount.puuid
+  );
+
+  const overallAverageStats = getOverallAverageStats(
+    avgStatsArray,
+    recentMatches
+  );
+
+  const numGames = recentMatches.length;
+
+  const headPercent = Number(
+    overallAverageStats.avgHeadShotPercentage.toFixed(1)
+  );
+  const bodyPercent = Number(
+    overallAverageStats.avgBodyShotPercentage.toFixed(1)
+  );
+  const legsPercent = Number(
+    overallAverageStats.avgLegShotPercentage.toFixed(1)
+  );
+
   const greatestPercent = Math.max(headPercent, bodyPercent, legsPercent);
 
   return (
