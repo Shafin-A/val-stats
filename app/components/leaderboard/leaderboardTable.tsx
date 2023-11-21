@@ -3,12 +3,12 @@
 import React, { useState } from "react";
 import { LeaderboardPlayer } from "../../../types/types";
 import styles from "./leaderboardTable.module.css";
-import { PlayerTagLine } from "../playerTagline";
 import { Pagination } from "./pagination";
 import { REGIONS } from "../../(pages)/search/page";
 import { useSearchParams, useRouter } from "next/navigation";
-import { PlayerGameName } from "../playerGameName";
-import { PlayerCardImage } from "../playerCardImage";
+import { PlayerCardImageClient } from "../playerCardImageClient";
+import { PlayerGameNameClient } from "../playerGameNameClient";
+import { PlayerTagLineClient } from "../playerTaglineClient";
 
 interface LeaderboardTableProps {
   leaderboardData: Record<string, LeaderboardPlayer[]>;
@@ -44,7 +44,7 @@ export const LeaderboardTable = ({
     <tr key={player.leaderboardRank} className={styles.text_style}>
       <td>{player.leaderboardRank}</td>
       <td>
-        <PlayerCardImage
+        <PlayerCardImageClient
           src={`https://media.valorant-api.com/playercards/${player.PlayerCardID}/smallart.png`}
           borderRadius="50%"
           padding="0.15rem"
@@ -59,10 +59,16 @@ export const LeaderboardTable = ({
         {player.IsAnonymized ? (
           "Secret Agent"
         ) : (
-          <span>
-            <PlayerGameName gameName={player.gameName} />{" "}
-            <PlayerTagLine tagLine={player.tagLine} />
-          </span>
+          <a
+            href={`/player/${encodeURIComponent(
+              `${player.gameName}#${player.tagLine}`
+            )}`}
+          >
+            <span>
+              <PlayerGameNameClient gameName={player.gameName} />{" "}
+              <PlayerTagLineClient tagLine={player.tagLine} />
+            </span>
+          </a>
         )}
       </td>
       <td>{player.rankedRating}</td>

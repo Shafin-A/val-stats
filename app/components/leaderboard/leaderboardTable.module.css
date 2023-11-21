@@ -66,6 +66,10 @@
     background-color: #1b2733;
 }
 
+.leaderboard_table a {
+    text-decoration: none;
+}
+
 .text_style {
     font-size: 1.125rem;
     font-weight: 700;

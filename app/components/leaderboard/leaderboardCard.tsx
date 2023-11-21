@@ -1,7 +1,7 @@
 import styles from "./leaderboardCard.module.css";
-import { PlayerCardImage } from "../playerCardImage";
-import { PlayerGameName } from "../playerGameName";
-import { PlayerTagLine } from "../playerTagline";
+import { PlayerCardImageClient } from "../playerCardImageClient";
+import { PlayerGameNameClient } from "../playerGameNameClient";
+import { PlayerTagLineClient } from "../playerTaglineClient";
 
 interface LeaderboardCardProps {
   playerCardID: string;
@@ -23,6 +23,7 @@ export const LeaderboardCard = ({
   isAnonymized,
 }: LeaderboardCardProps) => {
   const playerCardIdSrc = `https://media.valorant-api.com/playercards/${playerCardID}/smallart.png`;
+
   return (
     <div className={styles.card_container}>
       <a
@@ -36,13 +37,15 @@ export const LeaderboardCard = ({
           </div>
         </div>
         <div>
-          <PlayerCardImage src={playerCardIdSrc} />
+          <PlayerCardImageClient src={playerCardIdSrc} />
         </div>
         <div className={styles.game_name_container}>
-          <PlayerGameName gameName={isAnonymized ? "Secret Agent" : gameName} />
+          <PlayerGameNameClient
+            gameName={isAnonymized ? "Secret Agent" : gameName}
+          />
         </div>
         <div>
-          <PlayerTagLine tagLine={tagLine} />
+          <PlayerTagLineClient tagLine={tagLine} />
         </div>
         <div>
           <span className={styles.region_text}>

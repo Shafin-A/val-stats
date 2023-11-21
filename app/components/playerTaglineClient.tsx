@@ -1,14 +1,13 @@
-import { getPlayerAccount } from "../../apis/api";
 import styles from "./playerTagline.module.css";
 
 interface playerTagLineProps {
-  playerNameTag: string[];
+  tagLine: string;
   fontSize?: string;
   fontWeight?: string;
 }
 
-export const PlayerTagLine = async ({
-  playerNameTag,
+export const PlayerTagLineClient = ({
+  tagLine,
   fontSize,
   fontWeight,
 }: playerTagLineProps) => {
@@ -17,16 +16,9 @@ export const PlayerTagLine = async ({
     fontWeight,
   };
 
-  const playerAccount = await getPlayerAccount(
-    playerNameTag[0],
-    playerNameTag[1]
-  );
-
-  const playerGameTag = playerAccount.tag;
-
   return (
     <span className={styles.tag_line} style={componentStyle}>
-      #{playerGameTag}
+      #{tagLine}
     </span>
   );
 };
