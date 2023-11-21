@@ -4,12 +4,15 @@ import React, { useState, ChangeEvent } from "react";
 import styles from "./search.module.css";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
+import { useRouter } from "next/navigation";
 
 interface SearchProps {
   suggestions?: string[];
 }
 
 const Search = ({ suggestions }: SearchProps) => {
+  const router = useRouter();
+
   const [inputValue, setInputValue] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState(
     [] as string[]
@@ -32,8 +35,13 @@ const Search = ({ suggestions }: SearchProps) => {
     }
   };
 
+  const handleSearch = (suggestion: string) => {
+    const encoded = encodeURIComponent(suggestion);
+    router.push(`/player/${encoded}`);
+  };
+
   const handleSuggestionClick = (suggestion: string): void => {
-    console.log(suggestion);
+    handleSearch(suggestion);
   };
 
   // Render a single suggestion item
@@ -70,6 +78,7 @@ const Search = ({ suggestions }: SearchProps) => {
         placeholder="Search for a name#tag..."
         value={inputValue}
         onChange={handleInputChange}
+        onKeyDown={(e) => e.key === "Enter" && handleSearch(inputValue)}
       />
       {filteredSuggestions.length > 0 && (
         <div
