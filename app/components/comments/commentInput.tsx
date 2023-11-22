@@ -96,9 +96,12 @@ export const CommentInput = ({ onSubmit }: commentInputProps) => {
   if (!editor) return null;
 
   return (
-    <Card>
+    <Card className="comment-input-container">
       <MenuBar editor={editor} />
       <EditorContent editor={editor} />
+      <Button className="comment-post-button">
+        <strong>Post</strong>
+      </Button>
     </Card>
   );
 };
