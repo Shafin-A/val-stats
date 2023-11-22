@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { CommentSectionComment } from "../../../types/types";
 import { Card } from "@tremor/react";
 import { CommentInput } from "./commentInput";
+import parse from "html-react-parser";
+import xss from "xss";
 
 interface commentProps {
   comment: CommentSectionComment;
@@ -19,7 +21,7 @@ const Comment = ({ comment, maxDepth }: commentProps) => (
     <p>
       <strong>{comment.user}</strong> - {comment.timestamp}
     </p>
-    <p>{comment.text}</p>
+    {parse(xss(comment.text))}
     {comment.replies && comment.replies.length > 0 && (
       <div
         style={{ margin: comment.depth < maxDepth ? "" : "0 -1.5rem -1.5rem" }}
@@ -67,7 +69,7 @@ export const commentsData = [
       {
         user: "User2",
         timestamp: "2023-01-01 12:05 PM",
-        text: "Reply to Comment 1",
+        text: "<code>Reply</code> <em>to</em> <strong>Comment 1</strong>",
         depth: 1,
         replies: [
           {
@@ -79,7 +81,7 @@ export const commentsData = [
               {
                 user: "User2",
                 timestamp: "2023-01-01 12:15 PM",
-                text: "aaa",
+                text: "<s>aaa</s>",
                 depth: 3,
                 replies: [
                   {
