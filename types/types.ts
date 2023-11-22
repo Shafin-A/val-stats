@@ -444,3 +444,11 @@ export interface Ability {
   description: string;
   displayIcon?: string;
 }
+
+export interface CommentSectionComment {
+  user: string;
+  timestamp: string;
+  text: string;
+  depth: number;
+  replies?: CommentSectionComment[];
+}

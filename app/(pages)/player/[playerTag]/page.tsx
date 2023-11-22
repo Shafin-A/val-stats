@@ -13,7 +13,11 @@ import { RecentMatchesCard } from "../../../components/cards/recentMatchesCard";
 import { Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Card } from "@tremor/react";
+import { Card, Divider } from "@tremor/react";
+import {
+  CommentsSection,
+  commentsData,
+} from "../../../components/comments/comment";
 
 const Page = async ({ params }: { params: { playerTag: string } }) => {
   const playerNameTag = decodeURIComponent(params.playerTag).split("#");
@@ -120,6 +124,8 @@ const Page = async ({ params }: { params: { playerTag: string } }) => {
           </Suspense>
         </div>
       </div>
+      <Divider>Comments</Divider>
+      <CommentsSection comments={commentsData} maxDepth={2} />
     </div>
   );
 };

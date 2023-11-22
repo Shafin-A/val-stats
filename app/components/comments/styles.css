@@ -1,0 +1,32 @@
+.tiptap {
+    resize: vertical;
+    overflow: auto;
+
+    height: 58px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    background-color: rgb(17 24 39 / 1);
+
+    border-color: rgb(31, 41, 55);
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.tiptap:hover {
+    background-color: rgb(19 26 43);
+}
+
+.tiptap:focus {
+    border-color: rgb(30 64 175);
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+    color: rgb(107 114 128);
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+}
