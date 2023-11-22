@@ -13,6 +13,8 @@
     border-radius: 8px;
     border-style: solid;
     border-width: 1px;
+
+    margin-top: 0.5rem;
 }
 
 .tiptap:hover {
@@ -29,4 +31,26 @@
     float: left;
     height: 0;
     pointer-events: none;
+}
+
+.menu-bar-container button span {
+    cursor: pointer;
+    width: 3rem;
+}
+
+.menu-bar-container button:disabled span {
+    pointer-events: none;
+}
+
+.menu-bar-container button:hover span {
+    opacity: 0.5;
+}
+
+.menu-bar-container button:disabled:hover span {
+    opacity: 1;
+}
+
+.menu-bar-container {
+    display: flex;
+    gap: 0.5rem;
 }

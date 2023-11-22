@@ -1,6 +1,6 @@
 import { useEditor, EditorContent, Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Card, Textarea } from "@tremor/react";
+import { Badge, Button, Card, Textarea } from "@tremor/react";
 import Placeholder from "@tiptap/extension-placeholder";
 import "./styles.css";
 
@@ -9,22 +9,72 @@ interface commentInputProps {
 }
 const MenuBar = ({ editor }: { editor: Editor }) => {
   return (
-    <>
+    <div className="menu-bar-container">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
-        className={editor.isActive("bold") ? "is-active" : ""}
       >
-        bold
+        <Badge
+          color={
+            !editor.can().chain().focus().toggleBold().run()
+              ? "slate"
+              : editor.isActive("bold")
+              ? "lime"
+              : ""
+          }
+        >
+          <strong>B</strong>
+        </Badge>
       </button>
       <button
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
-        className={editor.isActive("italic") ? "is-active" : ""}
       >
-        italic
+        <Badge
+          color={
+            !editor.can().chain().focus().toggleItalic().run()
+              ? "slate"
+              : editor.isActive("italic")
+              ? "lime"
+              : ""
+          }
+        >
+          <i>I</i>
+        </Badge>
       </button>
-    </>
+      <button
+        onClick={() => editor.chain().focus().toggleStrike().run()}
+        disabled={!editor.can().chain().focus().toggleStrike().run()}
+      >
+        <Badge
+          color={
+            !editor.can().chain().focus().toggleStrike().run()
+              ? "slate"
+              : editor.isActive("strike")
+              ? "lime"
+              : ""
+          }
+        >
+          <s>S</s>
+        </Badge>
+      </button>
+      <button
+        onClick={() => editor.chain().focus().toggleCode().run()}
+        disabled={!editor.can().chain().focus().toggleCode().run()}
+      >
+        <Badge
+          color={
+            !editor.can().chain().focus().toggleCode().run()
+              ? "slate"
+              : editor.isActive("code")
+              ? "lime"
+              : ""
+          }
+        >
+          <code>{"<>"}</code>
+        </Badge>
+      </button>
+    </div>
   );
 };
 
