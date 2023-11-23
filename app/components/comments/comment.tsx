@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { CommentSectionComment } from "../../../types/types";
-import { Card } from "@tremor/react";
+import { Button, Card } from "@tremor/react";
 import { CommentInput } from "./commentInput";
-import parse from "html-react-parser";
 import xss from "xss";
 
 interface commentProps {
@@ -16,14 +15,16 @@ interface commentsSectionProps {
   maxDepth: number;
 }
 
-const Comment = ({ comment, maxDepth }: commentProps) => (
-  <Card style={{ marginTop: "1rem" }}>
-    <p>
-      <strong>{comment.user}</strong> - {comment.timestamp}
-    </p>
-    {comment.replies && comment.replies.length > 0 && (
-      <div
-        style={{ margin: comment.depth < maxDepth ? "" : "0 -1.5rem -1.5rem" }}
+const allowedTags = ["strong", "em", "s", "code"];
+
+const Comment = ({ comment, maxDepth }: commentProps) => {
+  const [showReplyBox, setShowReplyBox] = useState(false);
+
+  return (
+    <Card style={{ marginTop: "1rem" }}>
+      <p>
+        <strong>{comment.user}</strong> - {comment.timestamp}
+      </p>
       {
         <div
           dangerouslySetInnerHTML={{
@@ -39,14 +40,27 @@ const Comment = ({ comment, maxDepth }: commentProps) => (
           }}
         />
       }
+      <Button
+        style={{ marginTop: "1rem", marginBottom: "1rem" }}
+        onClick={() => setShowReplyBox(!showReplyBox)}
       >
-        {comment.replies.map((reply, index) => (
-          <Comment key={index} comment={reply} maxDepth={maxDepth} />
-        ))}
-      </div>
-    )}
-  </Card>
-);
+        {!showReplyBox ? "Reply" : "Cancel"}
+      </Button>
+      {showReplyBox && <CommentInput onSubmit={() => {}} />}
+      {comment.replies && comment.replies.length > 0 && (
+        <div
+          style={{
+            margin: comment.depth < maxDepth ? "" : "0 -1.5rem -1.5rem",
+          }}
+        >
+          {comment.replies.map((reply, index) => (
+            <Comment key={index} comment={reply} maxDepth={maxDepth} />
+          ))}
+        </div>
+      )}
+    </Card>
+  );
+};
 
 export const CommentsSection = ({
   comments,
@@ -77,13 +91,13 @@ export const commentsData = [
   {
     user: "User1",
     timestamp: "2023-01-01 12:00 PM",
-    text: "Comment 1",
+    content: "<p>Comment 1</p>",
     depth: 0,
     replies: [
       {
         user: "User2",
         timestamp: "2023-01-01 12:05 PM",
-        text: "<code>Reply</code> <em>to</em> <strong>Comment 1</strong>",
+        content: "<code>Reply</code> <em>to</em> <strong>Comment 1</strong>",
         depth: 1,
         replies: [
           {
