@@ -7,6 +7,7 @@ import "./styles.css";
 interface commentInputProps {
   onSubmit: Function;
 }
+
 const MenuBar = ({ editor }: { editor: Editor }) => {
   return (
     <div className="menu-bar-container">

@@ -10,15 +10,18 @@ interface commentProps {
   maxDepth: number;
 }
 
-interface commentsSectionProps {
-  comments: CommentSectionComment[];
-  maxDepth: number;
-}
-
-const allowedTags = ["strong", "em", "s", "code"];
-
-const Comment = ({ comment, maxDepth }: commentProps) => {
+export const Comment = ({ comment, maxDepth }: commentProps) => {
   const [showReplyBox, setShowReplyBox] = useState(false);
+
+  const sanitizedCommentContent = xss(comment.content, {
+    whiteList: {
+      em: [],
+      s: [],
+      code: [],
+      strong: [],
+      p: [],
+    },
+  });
 
   return (
     <Card style={{ marginTop: "1rem" }}>
@@ -28,15 +31,7 @@ const Comment = ({ comment, maxDepth }: commentProps) => {
       {
         <div
           dangerouslySetInnerHTML={{
-            __html: xss(comment.content, {
-              whiteList: {
-                em: [],
-                s: [],
-                code: [],
-                strong: [],
-                p: [],
-              },
-            }),
+            __html: sanitizedCommentContent,
           }}
         />
       }
@@ -44,7 +39,7 @@ const Comment = ({ comment, maxDepth }: commentProps) => {
         style={{ marginTop: "1rem", marginBottom: "1rem" }}
         onClick={() => setShowReplyBox(!showReplyBox)}
       >
-        {!showReplyBox ? "Reply" : "Cancel"}
+        <strong>{!showReplyBox ? "Reply" : "Cancel"}</strong>
       </Button>
       {showReplyBox && <CommentInput onSubmit={() => {}} />}
       {comment.replies && comment.replies.length > 0 && (
@@ -59,30 +54,6 @@ const Comment = ({ comment, maxDepth }: commentProps) => {
         </div>
       )}
     </Card>
-  );
-};
-
-export const CommentsSection = ({
-  comments,
-  maxDepth,
-}: commentsSectionProps) => {
-  const [newComment, setNewComment] = useState("");
-
-  const handleCommentSubmit = (htmlContent: any) => {
-    // Handle the submitted comment (you may want to send it to a server, etc.)
-    console.log("New Comment:", htmlContent);
-
-    // Clear the input area
-    setNewComment("");
-  };
-
-  return (
-    <div style={{ width: "100%" }}>
-      <CommentInput onSubmit={handleCommentSubmit} />
-      {comments.map((comment, index) => (
-        <Comment key={index} comment={comment} maxDepth={maxDepth} />
-      ))}
-    </div>
   );
 };
 

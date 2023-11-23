@@ -14,10 +14,8 @@ import { Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Card, Divider } from "@tremor/react";
-import {
-  CommentsSection,
-  commentsData,
-} from "../../../components/comments/comment";
+import { commentsData } from "../../../components/comments/comment";
+import { CommentsSection } from "../../../components/comments/commentsSection";
 
 const Page = async ({ params }: { params: { playerTag: string } }) => {
   const playerNameTag = decodeURIComponent(params.playerTag).split("#");
