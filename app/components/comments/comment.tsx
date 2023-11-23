@@ -21,10 +21,24 @@ const Comment = ({ comment, maxDepth }: commentProps) => (
     <p>
       <strong>{comment.user}</strong> - {comment.timestamp}
     </p>
-    {parse(xss(comment.text))}
     {comment.replies && comment.replies.length > 0 && (
       <div
         style={{ margin: comment.depth < maxDepth ? "" : "0 -1.5rem -1.5rem" }}
+      {
+        <div
+          dangerouslySetInnerHTML={{
+            __html: xss(comment.content, {
+              whiteList: {
+                em: [],
+                s: [],
+                code: [],
+                strong: [],
+                p: [],
+              },
+            }),
+          }}
+        />
+      }
       >
         {comment.replies.map((reply, index) => (
           <Comment key={index} comment={reply} maxDepth={maxDepth} />
@@ -75,19 +89,20 @@ export const commentsData = [
           {
             user: "User1",
             timestamp: "2023-01-01 12:10 PM",
-            text: "Nested Reply to Comment 1",
+            content: "<ul><li>Nested Reply</li></ul> to Comment 1",
             depth: 2,
             replies: [
               {
                 user: "User2",
                 timestamp: "2023-01-01 12:15 PM",
-                text: "<s>aaa</s>",
+                content: "<s>aaa</s>",
                 depth: 3,
                 replies: [
                   {
                     user: "User1",
                     timestamp: "2023-01-01 12:20 PM",
-                    text: "Nested Reply to Comment 1Nested Reply to Comment 1Nested Reply to Comment 1Nested Reply to Comment 1",
+                    content:
+                      "Nested Reply to Comment 1Nested Reply to Comment 1Nested Reply to Comment 1Nested Reply to Comment 1",
                     depth: 4,
                   },
                 ],
@@ -101,7 +116,7 @@ export const commentsData = [
   {
     user: "User3",
     timestamp: "2023-01-01 1:00 PM",
-    text: "Comment 2",
+    content: "Comment 2",
     depth: 0,
   },
 ];

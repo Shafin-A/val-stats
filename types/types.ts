@@ -448,7 +448,7 @@ export interface Ability {
 export interface CommentSectionComment {
   user: string;
   timestamp: string;
-  text: string;
+  content: string;
   depth: number;
   replies?: CommentSectionComment[];
 }
