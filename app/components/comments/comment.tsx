@@ -89,6 +89,7 @@ export const commentsData = [
                     content:
                       "Nested Reply to Comment 1Nested Reply to Comment 1Nested Reply to Comment 1Nested Reply to Comment 1",
                     depth: 4,
+                    replies: [],
                   },
                 ],
               },
@@ -103,5 +104,6 @@ export const commentsData = [
     timestamp: "2023-01-01 1:00 PM",
     content: "Comment 2",
     depth: 0,
+    replies: [],
   },
 ];
