@@ -42,7 +42,7 @@ export const Comment = ({ comment, maxDepth }: commentProps) => {
         <strong>{!showReplyBox ? "Reply" : "Cancel"}</strong>
       </Button>
       {showReplyBox && <CommentInput onSubmit={() => {}} />}
-      {comment.replies && comment.replies.length > 0 && (
+      {comment.replies.length > 0 && (
         <div
           style={{
             margin: comment.depth < maxDepth ? "" : "0 -1.5rem -1.5rem",

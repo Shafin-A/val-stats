@@ -450,5 +450,5 @@ export interface CommentSectionComment {
   timestamp: string;
   content: string;
   depth: number;
-  replies?: CommentSectionComment[];
+  replies: CommentSectionComment[];
 }
