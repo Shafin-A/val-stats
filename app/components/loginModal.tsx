@@ -3,8 +3,6 @@
 import {
   Badge,
   Button,
-  List,
-  ListItem,
   Tab,
   TabGroup,
   TabList,
@@ -144,6 +142,12 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
                 <TextInput
                   placeholder="Type email here"
                   value={tabState.register.emailValue}
+                  error={
+                    !/(^[a-zA-Z0-9'_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)/.test(
+                      tabState.register.emailValue
+                    ) && !(tabState.register.emailValue.length === 0)
+                  }
+                  errorMessage="Not a valid email"
                   onChange={(e) =>
                     setTabState((prevTabState) => ({
                       ...prevTabState,
