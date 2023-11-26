@@ -22,3 +22,9 @@
 .close_button:hover {
     opacity: 0.5;
 }
+
+.warn_text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #898d94;
+}

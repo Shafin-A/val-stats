@@ -202,6 +202,10 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
                 />
               </div>
               <Button>Register</Button>
+              <span className={styles.warn_text}>
+                Note: This website is a hobby project. Please be aware that
+                authentication systems may not be as secure as most websites.
+              </span>
             </div>
           </TabPanel>
         </TabPanels>
