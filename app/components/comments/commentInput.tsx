@@ -1,8 +1,13 @@
+"use client";
+
 import { useEditor, EditorContent, Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Badge, Button, Card, Textarea } from "@tremor/react";
+import { Badge, Button, Card, TextInput, Textarea } from "@tremor/react";
 import Placeholder from "@tiptap/extension-placeholder";
 import "./styles.css";
+import { MouseEvent, useState } from "react";
+import { Modal } from "../modal";
+import { LoginModal } from "../loginModal";
 
 interface commentInputProps {
   onSubmit: Function;
@@ -80,6 +85,16 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
 };
 
 export const CommentInput = ({ onSubmit }: commentInputProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -100,9 +115,10 @@ export const CommentInput = ({ onSubmit }: commentInputProps) => {
     <Card className="comment-input-container">
       <MenuBar editor={editor} />
       <EditorContent editor={editor} />
-      <Button className="comment-post-button">
+      <Button className="comment-post-button" onClick={openModal}>
         <strong>Post</strong>
       </Button>
+      <LoginModal isOpen={isModalOpen} closeModal={closeModal} />
     </Card>
   );
 };
