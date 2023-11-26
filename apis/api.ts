@@ -2,6 +2,7 @@ import {
   Agent,
   CompetitiveTiers,
   LeaderboardPlayer,
+  LoginToken,
   MMR,
   Map,
   Match,
@@ -17,7 +18,8 @@ export const getLeaderboardData = async (
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch leaderboard data");
+    const errorData = await res.json();
+    throw new Error(errorData);
   }
 
   // Add the region
@@ -51,7 +53,8 @@ export const getPlayerAccount = async (
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch player data");
+    const errorData = await res.json();
+    throw new Error(errorData);
   }
 
   const { status, data } = await res.json();
@@ -76,7 +79,8 @@ export const getPlayerMatches = async (
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch match data");
+    const errorData = await res.json();
+    throw new Error(errorData);
   }
 
   const { status, data } = await res.json();
@@ -101,7 +105,8 @@ export const getPlayerMMR = async (
   const res = await fetch(apiUrl, { next: { revalidate: 300 } });
 
   if (!res.ok) {
-    throw new Error("Failed to fetch MMR data");
+    const errorData = await res.json();
+    throw new Error(errorData);
   }
 
   const { status, data } = await res.json();
@@ -121,7 +126,8 @@ export const getCompetitiveTiers = async (
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch competitive tiers data");
+    const errorData = await res.json();
+    throw new Error(errorData);
   }
 
   const { status, data } = await res.json();
@@ -137,7 +143,8 @@ export const getMaps = async (): Promise<Map[]> => {
   const res = await fetch(`https://valorant-api.com/v1/maps`);
 
   if (!res.ok) {
-    throw new Error("Failed to fetch maps data");
+    const errorData = await res.json();
+    throw new Error(errorData);
   }
 
   const { status, data } = await res.json();
@@ -155,7 +162,8 @@ export const getAgents = async (): Promise<Agent[]> => {
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch agents data");
+    const errorData = await res.json();
+    throw new Error(errorData);
   }
 
   const { status, data } = await res.json();
@@ -165,4 +173,29 @@ export const getAgents = async (): Promise<Agent[]> => {
   }
 
   return data as Agent[];
+};
+
+export const login = async (
+  username: string,
+  password: string
+): Promise<LoginToken> => {
+  const res = await fetch(`http://127.0.0.1:8000/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      username: username,
+      password: password,
+    }),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.detail);
+  }
+
+  const token = await res.json();
+
+  return token as LoginToken;
 };

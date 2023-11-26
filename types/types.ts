@@ -452,3 +452,8 @@ export interface CommentSectionComment {
   depth: number;
   replies: CommentSectionComment[];
 }
+
+export interface LoginToken {
+  access_token: string;
+  token_type: string;
+}

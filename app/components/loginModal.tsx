@@ -14,10 +14,11 @@ import { Modal } from "./modal";
 
 import styles from "./loginModal.module.css";
 import { useState } from "react";
+import { login } from "../../apis/api";
 
 interface loginModalProps {
   isOpen: boolean;
-  closeModal: React.MouseEventHandler<HTMLElement>;
+  closeModal: Function;
 }
 
 const SPECIAL_CHAR_MESSAGE =
@@ -70,9 +71,27 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
     },
   });
 
+  const [loginError, setLoginError] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const token = await login(
+        tabState.login.usernameValue,
+        tabState.login.passwordValue
+      );
+
+      localStorage.setItem("token", token.access_token);
+
+      closeModal();
+    } catch (e: any) {
+      console.error(e);
+      setLoginError(e.message);
+    }
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={closeModal}>
-      <Badge className={styles.close_button} onClick={closeModal}>
+      <Badge className={styles.close_button} onClick={() => closeModal()}>
         X
       </Badge>
       <TabGroup>
@@ -87,27 +106,34 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
                 <TextInput
                   placeholder="Type username here"
                   value={tabState.login.usernameValue}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    setLoginError("");
                     setTabState((prevTabState) => ({
                       ...prevTabState,
                       login: {
                         ...prevTabState.login,
                         usernameValue: e.target.value,
                       },
-                    }))
-                  }
+                    }));
+                  }}
+                  error={loginError.length > 0}
+                  errorMessage={loginError}
                 />
 
                 <TextInput
                   placeholder="Type password here"
                   type="password"
                   error={
-                    tabState.login.passwordValue.length > 0 &&
-                    !(tabState.login.errorMessage.length === 0)
+                    (tabState.login.passwordValue.length > 0 &&
+                      !(tabState.login.errorMessage.length === 0)) ||
+                    loginError.length > 0
                   }
-                  errorMessage={tabState.login.errorMessage}
+                  errorMessage={
+                    loginError ? loginError : tabState.login.errorMessage
+                  }
                   value={tabState.login.passwordValue}
                   onChange={(e) => {
+                    setLoginError("");
                     setTabState((prevTabState) => ({
                       ...prevTabState,
                       login: {
@@ -119,7 +145,15 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
                   }}
                 />
               </div>
-              <Button>Login</Button>
+              <Button
+                onClick={handleLogin}
+                disabled={
+                  tabState.login.errorMessage.length !== 0 ||
+                  tabState.login.usernameValue.length === 0
+                }
+              >
+                <strong>Login</strong>
+              </Button>
             </div>
           </TabPanel>
           <TabPanel>

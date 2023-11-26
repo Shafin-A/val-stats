@@ -4,7 +4,7 @@ import { Card } from "@tremor/react";
 
 interface modalProps {
   isOpen: boolean;
-  onClose: React.MouseEventHandler<HTMLDivElement>;
+  onClose: Function;
   children: React.ReactNode;
 }
 
@@ -13,7 +13,7 @@ export const Modal = ({ isOpen, onClose, children }: modalProps) => {
     <div
       className={styles.overlay}
       style={{ display: isOpen ? "flex" : "none" }}
-      onClick={onClose}
+      onClick={() => onClose()}
     >
       <Card className={styles.modal} onClick={(e) => e.stopPropagation()}>
         {children}
