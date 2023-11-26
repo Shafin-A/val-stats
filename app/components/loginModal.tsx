@@ -13,7 +13,7 @@ import {
 import { Modal } from "./modal";
 
 import styles from "./loginModal.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface loginModalProps {
   isOpen: boolean;
