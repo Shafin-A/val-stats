@@ -4,6 +4,7 @@ import { PlayerGameNameClient } from "../playerGameNameClient";
 import { PlayerTagLineClient } from "../playerTaglineClient";
 
 interface LeaderboardCardProps {
+  puuid: string;
   playerCardID: string;
   leaderboardRank: number;
   gameName: string;
@@ -14,6 +15,7 @@ interface LeaderboardCardProps {
 }
 
 export const LeaderboardCard = ({
+  puuid,
   playerCardID,
   leaderboardRank,
   gameName,
@@ -28,7 +30,9 @@ export const LeaderboardCard = ({
     <div className={styles.card_container}>
       <a
         className={styles.card_player_link}
-        href={`/player/${encodeURIComponent(`${gameName}#${tagLine}`)}`}
+        href={`/player/${encodeURIComponent(
+          `${gameName}#${tagLine}`
+        )}/${puuid}`}
       >
         <div className={styles.leaderboard_rank}>
           <div className={styles.leaderboard_rank_text}>

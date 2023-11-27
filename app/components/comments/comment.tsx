@@ -1,16 +1,17 @@
 "use client";
 import React, { useState } from "react";
-import { CommentSectionComment } from "../../../types/types";
-import { Button, Card } from "@tremor/react";
+import { CommentSectionComment, User } from "../../../types/types";
+import { Button, Card, Divider } from "@tremor/react";
 import { CommentInput } from "./commentInput";
 import xss from "xss";
 
 interface commentProps {
   comment: CommentSectionComment;
   maxDepth: number;
+  currentUser: User | null;
 }
 
-export const Comment = ({ comment, maxDepth }: commentProps) => {
+export const Comment = ({ comment, maxDepth, currentUser }: commentProps) => {
   const [showReplyBox, setShowReplyBox] = useState(false);
 
   const sanitizedCommentContent = xss(comment.content, {
@@ -23,11 +24,21 @@ export const Comment = ({ comment, maxDepth }: commentProps) => {
     },
   });
 
+  const timeStamp = new Date(comment.timestamp).toLocaleString("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+
   return (
     <Card style={{ marginTop: "1rem" }}>
       <p>
-        <strong>{comment.user}</strong> - {comment.timestamp}
+        <strong>{comment.user_name}</strong> - {timeStamp}
       </p>
+      <Divider />
       {
         <div
           dangerouslySetInnerHTML={{
@@ -41,7 +52,9 @@ export const Comment = ({ comment, maxDepth }: commentProps) => {
       >
         <strong>{!showReplyBox ? "Reply" : "Cancel"}</strong>
       </Button>
-      {showReplyBox && <CommentInput onSubmit={() => {}} />}
+      {showReplyBox && (
+        <CommentInput currentUser={currentUser} comment={comment} />
+      )}
       {comment.replies.length > 0 && (
         <div
           style={{
@@ -49,61 +62,15 @@ export const Comment = ({ comment, maxDepth }: commentProps) => {
           }}
         >
           {comment.replies.map((reply, index) => (
-            <Comment key={index} comment={reply} maxDepth={maxDepth} />
+            <Comment
+              key={index}
+              comment={reply}
+              maxDepth={maxDepth}
+              currentUser={currentUser}
+            />
           ))}
         </div>
       )}
     </Card>
   );
 };
-
-// Example usage:
-export const commentsData = [
-  {
-    user: "User1",
-    timestamp: "2023-01-01 12:00 PM",
-    content: "<p>Comment 1</p>",
-    depth: 0,
-    replies: [
-      {
-        user: "User2",
-        timestamp: "2023-01-01 12:05 PM",
-        content: "<code>Reply</code> <em>to</em> <strong>Comment 1</strong>",
-        depth: 1,
-        replies: [
-          {
-            user: "User1",
-            timestamp: "2023-01-01 12:10 PM",
-            content: "<ul><li>Nested Reply</li></ul> to Comment 1",
-            depth: 2,
-            replies: [
-              {
-                user: "User2",
-                timestamp: "2023-01-01 12:15 PM",
-                content: "<s>aaa</s>",
-                depth: 3,
-                replies: [
-                  {
-                    user: "User1",
-                    timestamp: "2023-01-01 12:20 PM",
-                    content:
-                      "Nested Reply to Comment 1Nested Reply to Comment 1Nested Reply to Comment 1Nested Reply to Comment 1",
-                    depth: 4,
-                    replies: [],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    user: "User3",
-    timestamp: "2023-01-01 1:00 PM",
-    content: "Comment 2",
-    depth: 0,
-    replies: [],
-  },
-];

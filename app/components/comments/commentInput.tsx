@@ -5,12 +5,15 @@ import StarterKit from "@tiptap/starter-kit";
 import { Badge, Button, Card, TextInput, Textarea } from "@tremor/react";
 import Placeholder from "@tiptap/extension-placeholder";
 import "./styles.css";
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { Modal } from "../modal";
 import { LoginModal } from "../loginModal";
+import { CommentSectionComment, User } from "../../../types/types";
+import { getPlayerAccount, postComment } from "../../../apis/api";
 
 interface commentInputProps {
-  onSubmit: Function;
+  currentUser: User | null;
+  comment?: CommentSectionComment;
 }
 
 const MenuBar = ({ editor }: { editor: Editor }) => {
@@ -84,8 +87,10 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
   );
 };
 
-export const CommentInput = ({ onSubmit }: commentInputProps) => {
+export const CommentInput = ({ currentUser, comment }: commentInputProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [puuid, setPuuid] = useState("");
+  const [token, setToken] = useState<string | null>("");
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -109,13 +114,34 @@ export const CommentInput = ({ onSubmit }: commentInputProps) => {
     ],
   });
 
+  useEffect(() => {
+    const url = location.href.split("/");
+    setPuuid(url[url.length - 1]);
+    setToken(localStorage.getItem("token"));
+  }, []);
+
   if (!editor) return null;
+
+  const handlePostComment = async () => {
+    if (token) {
+      await postComment(puuid, token, editor.getHTML(), comment?.id);
+      location.reload();
+    }
+  };
+
+  const handleOnClick = async () => {
+    return currentUser ? await handlePostComment() : openModal();
+  };
 
   return (
     <Card className="comment-input-container">
       <MenuBar editor={editor} />
       <EditorContent editor={editor} />
-      <Button className="comment-post-button" onClick={openModal}>
+      <Button
+        disabled={editor.isEmpty}
+        className="comment-post-button"
+        onClick={handleOnClick}
+      >
         <strong>Post</strong>
       </Button>
       <LoginModal isOpen={isModalOpen} closeModal={closeModal} />

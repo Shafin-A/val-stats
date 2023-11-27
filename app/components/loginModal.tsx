@@ -10,11 +10,11 @@ import {
   TabPanels,
   TextInput,
 } from "@tremor/react";
-import { Modal } from "./modal";
-
-import styles from "./loginModal.module.css";
 import { useState } from "react";
-import { login } from "../../apis/api";
+import { login, signUp } from "../../apis/api";
+import styles from "./loginModal.module.css";
+import { Modal } from "./modal";
+import { sign } from "crypto";
 
 interface loginModalProps {
   isOpen: boolean;
@@ -82,7 +82,24 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
 
       localStorage.setItem("token", token.access_token);
 
-      closeModal();
+      window.location.reload();
+    } catch (e: any) {
+      console.error(e);
+      setLoginError(e.message);
+    }
+  };
+
+  const handleSignUp = async () => {
+    try {
+      const token = await signUp(
+        tabState.register.usernameValue,
+        tabState.register.emailValue,
+        tabState.register.passwordValue
+      );
+
+      localStorage.setItem("token", token.access_token);
+
+      window.location.reload();
     } catch (e: any) {
       console.error(e);
       setLoginError(e.message);
@@ -235,7 +252,20 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
                   }}
                 />
               </div>
-              <Button>Register</Button>
+              <Button
+                onClick={handleSignUp}
+                disabled={
+                  tabState.register.passwordErrorMessage.length !== 0 ||
+                  tabState.register.passwordValue !==
+                    tabState.register.confirmPasswordValue ||
+                  tabState.register.usernameValue.length === 0 ||
+                  tabState.register.emailValue.length === 0 ||
+                  tabState.register.passwordValue.length === 0 ||
+                  tabState.register.confirmPasswordValue.length === 0
+                }
+              >
+                Register
+              </Button>
               <span className={styles.warn_text}>
                 Note: This website is a hobby project. Please be aware that
                 authentication systems may not be as secure as most websites.

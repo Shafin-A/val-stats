@@ -446,14 +446,23 @@ export interface Ability {
 }
 
 export interface CommentSectionComment {
-  user: string;
+  id: number;
+  user_name: string;
   timestamp: string;
   content: string;
   depth: number;
   replies: CommentSectionComment[];
+  puuid: number;
 }
 
 export interface LoginToken {
   access_token: string;
   token_type: string;
+}
+
+export interface User {
+  id: number;
+  user_name: string;
+  email: string;
+  disabled: boolean;
 }

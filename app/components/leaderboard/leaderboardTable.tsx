@@ -62,7 +62,7 @@ export const LeaderboardTable = ({
           <a
             href={`/player/${encodeURIComponent(
               `${player.gameName}#${player.tagLine}`
-            )}`}
+            )}/${player.puuid}`}
           >
             <span>
               <PlayerGameNameClient gameName={player.gameName} />{" "}

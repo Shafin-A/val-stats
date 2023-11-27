@@ -1,24 +1,29 @@
-import { PlayerAccuracyCard } from "../../../components/cards/playerAccuracyCard";
-import { PlayerCardImage } from "../../../components/playerCardImage";
-import { PlayerGameName } from "../../../components/playerGameName";
-import { PlayerOverallAverageStatsCard } from "../../../components/cards/playerOverallStatsCard";
-import { PlayerTagLine } from "../../../components/playerTagline";
+import { PlayerAccuracyCard } from "../../../../components/cards/playerAccuracyCard";
+import { PlayerCardImage } from "../../../../components/playerCardImage";
+import { PlayerGameName } from "../../../../components/playerGameName";
+import { PlayerOverallAverageStatsCard } from "../../../../components/cards/playerOverallStatsCard";
+import { PlayerTagLine } from "../../../../components/playerTagline";
 import styles from "./page.module.css";
-import { StatAreaChartCard } from "../../../components/cards/statAreaChartCard";
-import { RankRatingCard } from "../../../components/cards/rankRatingCard";
-import { MapsCard } from "../../../components/cards/mapsCard";
-import { MatchWinRatesCard } from "../../../components/cards/matchWinRatesCard";
-import { GameModeSelectCard } from "../../../components/cards/gameModeSelectCard";
-import { RecentMatchesCard } from "../../../components/cards/recentMatchesCard";
+import { StatAreaChartCard } from "../../../../components/cards/statAreaChartCard";
+import { RankRatingCard } from "../../../../components/cards/rankRatingCard";
+import { MapsCard } from "../../../../components/cards/mapsCard";
+import { MatchWinRatesCard } from "../../../../components/cards/matchWinRatesCard";
+import { GameModeSelectCard } from "../../../../components/cards/gameModeSelectCard";
+import { RecentMatchesCard } from "../../../../components/cards/recentMatchesCard";
 import { Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Card, Divider } from "@tremor/react";
-import { commentsData } from "../../../components/comments/comment";
-import { CommentsSection } from "../../../components/comments/commentsSection";
+import { CommentsSection } from "../../../../components/comments/commentsSection";
+import { getPuuidComments } from "../../../../../apis/api";
 
-const Page = async ({ params }: { params: { playerTag: string } }) => {
+const Page = async ({
+  params,
+}: {
+  params: { playerTag: string; puuid: string };
+}) => {
   const playerNameTag = decodeURIComponent(params.playerTag).split("#");
+  const comments = await getPuuidComments(params.puuid);
 
   return (
     <div className={styles.page_container}>
@@ -123,7 +128,7 @@ const Page = async ({ params }: { params: { playerTag: string } }) => {
         </div>
       </div>
       <Divider>Comments</Divider>
-      <CommentsSection comments={commentsData} maxDepth={2} />
+      <CommentsSection comments={comments} maxDepth={2} />
     </div>
   );
 };

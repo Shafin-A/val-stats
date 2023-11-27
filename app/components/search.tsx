@@ -5,6 +5,7 @@ import styles from "./search.module.css";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { useRouter } from "next/navigation";
+import { getPlayerAccount } from "../../apis/api";
 
 interface SearchProps {
   suggestions?: string[];
@@ -35,9 +36,14 @@ const Search = ({ suggestions }: SearchProps) => {
     }
   };
 
-  const handleSearch = (suggestion: string) => {
+  const handleSearch = async (suggestion: string) => {
+    const playerNameTag = suggestion.split("#");
+    const playerAccount = await getPlayerAccount(
+      playerNameTag[0],
+      playerNameTag[1]
+    );
     const encoded = encodeURIComponent(suggestion);
-    router.push(`/player/${encoded}`);
+    router.push(`/player/${encoded}/${playerAccount.puuid}`);
   };
 
   const handleSuggestionClick = (suggestion: string): void => {

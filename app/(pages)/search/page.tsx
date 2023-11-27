@@ -51,6 +51,7 @@ const Page = async () => {
         {Object.entries(topPlayersByRegion).map(([region, player]) => (
           <LeaderboardCard
             key={player.puuid}
+            puuid={player.puuid}
             playerCardID={player.PlayerCardID}
             leaderboardRank={player.leaderboardRank}
             gameName={player.gameName}

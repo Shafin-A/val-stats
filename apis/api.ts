@@ -1,5 +1,6 @@
 import {
   Agent,
+  CommentSectionComment,
   CompetitiveTiers,
   LeaderboardPlayer,
   LoginToken,
@@ -7,6 +8,7 @@ import {
   Map,
   Match,
   PlayerAccount,
+  User,
 } from "../types/types";
 
 export const getLeaderboardData = async (
@@ -184,6 +186,7 @@ export const login = async (
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
+    cache: "no-cache",
     body: new URLSearchParams({
       username: username,
       password: password,
@@ -198,4 +201,99 @@ export const login = async (
   const token = await res.json();
 
   return token as LoginToken;
+};
+
+export const signUp = async (
+  username: string,
+  email: string,
+  password: string
+): Promise<LoginToken> => {
+  const res = await fetch(`http://127.0.0.1:8000/auth/signup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user_name: username,
+      email: email,
+      password: password,
+    }),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.detail);
+  }
+
+  const token = await res.json();
+
+  return token as LoginToken;
+};
+
+export const getCurrentLoggedInUser = async (token: string): Promise<User> => {
+  const res = await fetch(`http://127.0.0.1:8000/users/me`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.detail);
+  }
+
+  const user = await res.json();
+
+  return user as User;
+};
+
+export const getPuuidComments = async (
+  puuid: string
+): Promise<CommentSectionComment[]> => {
+  const res = await fetch(`http://127.0.0.1:8000/comments/puuid/${puuid}`, {
+    cache: "no-cache",
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.detail);
+  }
+
+  const comments = await res.json();
+
+  return comments as CommentSectionComment[];
+};
+
+export const postComment = async (
+  puuid: string,
+  token: string,
+  content: string,
+  parentId?: number
+): Promise<CommentSectionComment> => {
+  const body = parentId
+    ? {
+        content: content,
+        parent_id: parentId,
+      }
+    : ({ content: content } as Record<string, string>);
+
+  const res = await fetch(`http://127.0.0.1:8000/comments/puuid/${puuid}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    cache: "no-cache",
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.detail);
+  }
+
+  const postedComment = await res.json();
+
+  return postedComment as CommentSectionComment;
 };
