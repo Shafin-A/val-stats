@@ -5,15 +5,21 @@ import { Card } from "@tremor/react";
 interface modalProps {
   isOpen: boolean;
   onClose: Function;
+  closeOnOverlayClick?: boolean;
   children: React.ReactNode;
 }
 
-export const Modal = ({ isOpen, onClose, children }: modalProps) => {
+export const Modal = ({
+  isOpen,
+  onClose,
+  closeOnOverlayClick,
+  children,
+}: modalProps) => {
   return (
     <div
       className={styles.overlay}
       style={{ display: isOpen ? "flex" : "none" }}
-      onClick={() => onClose()}
+      onClick={() => closeOnOverlayClick && onClose()}
     >
       <Card className={styles.modal} onClick={(e) => e.stopPropagation()}>
         {children}
