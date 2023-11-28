@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, ChangeEvent } from "react";
-import styles from "./search.module.css";
+import styles from "./searchBar.module.css";
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { useRouter } from "next/navigation";
 import { getPlayerAccount } from "../../apis/api";
-import { Card, TextInput } from "@tremor/react";
+import { TextInput } from "@tremor/react";
 import { PlayerGameNameClient } from "./playerGameNameClient";
 import { PlayerTagLineClient } from "./playerTaglineClient";
 import SearchIcon from "../../assets/search.svg";
@@ -15,7 +15,7 @@ interface SearchProps {
   suggestions?: string[];
 }
 
-const Search = ({ suggestions }: SearchProps) => {
+export const SearchBar = ({ suggestions }: SearchProps) => {
   const router = useRouter();
 
   const [inputValue, setInputValue] = useState("");
@@ -130,5 +130,3 @@ const Search = ({ suggestions }: SearchProps) => {
     </div>
   );
 };
-
-export default Search;

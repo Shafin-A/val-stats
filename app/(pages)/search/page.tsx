@@ -1,4 +1,4 @@
-import Search from "../../components/search";
+import { SearchBar } from "../../components/searchBar";
 import styles from "./page.module.css";
 import ValorantLogo from "../../../assets/valorant.svg";
 import { getAllLeaderboardData } from "../../../apis/api";
@@ -44,7 +44,7 @@ const Page = async () => {
       </div>
       <div className={styles.search_container}>
         <Suspense fallback={<p>Loading leaderboard....</p>}>
-          <Search suggestions={suggestions} />
+          <SearchBar suggestions={suggestions} />
         </Suspense>
       </div>
       <div className={styles.leaderboard_cards_container}>

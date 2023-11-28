@@ -1,6 +1,6 @@
 import ValorantLogo from "../../assets/valorant.svg";
 import styles from "./navbar.module.css";
-import Search from "./search";
+import { SearchBar } from "./searchBar";
 
 export const NavBar = () => {
   return (
@@ -11,7 +11,7 @@ export const NavBar = () => {
         </a>
       </div>
       <div className={styles.search_container}>
-        <Search />
+        <SearchBar />
       </div>
     </nav>
   );
