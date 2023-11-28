@@ -81,7 +81,7 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
 
       localStorage.setItem("token", token.access_token);
 
-      window.location.reload();
+      location.reload();
     } catch (e: any) {
       console.error(e);
       setLoginApiErrorMessage(e.message);
@@ -98,7 +98,7 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
 
       localStorage.setItem("token", token.access_token);
 
-      window.location.reload();
+      location.reload();
     } catch (e: any) {
       console.error(e);
       setLoginApiErrorMessage(e.message);
