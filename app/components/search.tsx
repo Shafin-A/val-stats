@@ -22,8 +22,12 @@ const Search = ({ suggestions }: SearchProps) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState(
     [] as string[]
   );
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const isError = errorMessage.length > 0;
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setErrorMessage("");
     const value = e.target.value;
     setInputValue(value);
 
@@ -41,13 +45,20 @@ const Search = ({ suggestions }: SearchProps) => {
   };
 
   const handleSearch = async (suggestion: string) => {
-    const playerNameTag = suggestion.split("#");
-    const playerAccount = await getPlayerAccount(
-      playerNameTag[0],
-      playerNameTag[1]
-    );
-    const encoded = encodeURIComponent(suggestion);
-    router.push(`/player/${encoded}/${playerAccount.puuid}`);
+    if (suggestion) {
+      const playerNameTag = suggestion.split("#");
+
+      try {
+        const playerAccount = await getPlayerAccount(
+          playerNameTag[0],
+          playerNameTag[1]
+        );
+        const encoded = encodeURIComponent(suggestion);
+        router.push(`/player/${encoded}/${playerAccount.puuid}`);
+      } catch (e: any) {
+        setErrorMessage(e.message);
+      }
+    }
   };
 
   const handleSuggestionClick = (suggestion: string): void => {
@@ -94,6 +105,8 @@ const Search = ({ suggestions }: SearchProps) => {
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={(e) => e.key === "Enter" && handleSearch(inputValue)}
+        error={isError}
+        errorMessage={errorMessage}
       />
       {filteredSuggestions.length > 0 && (
         <div
