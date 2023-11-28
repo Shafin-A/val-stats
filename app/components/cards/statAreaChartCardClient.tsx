@@ -3,6 +3,7 @@
 import { AreaChart, Card, Select, SelectItem } from "@tremor/react";
 import { useState } from "react";
 import { valueFormatter } from "./statAreaChartCard";
+import styles from "./statAreaChartCard.module.css";
 
 export const StatAreaChartCardClient = ({
   stats,
@@ -29,7 +30,7 @@ export const StatAreaChartCardClient = ({
           ))}
         </Select>
       </div>
-      <span className="chart-title">Avg {value} per games</span>
+      <span className={styles.chart_title}>Avg {value} per games</span>
       <AreaChart
         className="h-52"
         data={data}

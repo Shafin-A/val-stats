@@ -1,8 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.chart-title {
+.chart_title {
     font-size: 0.6875rem;
     font-weight: 600;
     color: #898d94;

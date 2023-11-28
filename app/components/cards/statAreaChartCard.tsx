@@ -1,4 +1,3 @@
-import "./statAreaChartCard.css";
 import { formatDate, getAvgStatsArrayForMatches } from "../../helpers";
 import { getPlayerAccount, getPlayerMatches } from "../../../apis/api";
 import { StatAreaChartCardClient } from "./statAreaChartCardClient";
