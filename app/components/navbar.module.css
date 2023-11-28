@@ -4,18 +4,18 @@
     align-items: center;
     background-color: #131727;
     color: white;
-    padding: 10px 20px;
-    height: 74px;
+    padding: 0.625rem 1.25rem;
+    height: 4.625rem;
 }
 
-.logoContainer {
+.logo_container {
     background-color: #FF4655;
     border-radius: 0.5rem;
 }
 
 .logo {
-    height: 54px;
-    width: 54px;
+    height: 3.375rem;
+    width: 3.375rem;
     fill: white;
 }
 

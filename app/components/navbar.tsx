@@ -5,7 +5,7 @@ import { SearchBar } from "./searchBar";
 export const NavBar = () => {
   return (
     <nav className={styles.nav}>
-      <div className={styles.logoContainer}>
+      <div className={styles.logo_container}>
         <a href="/search">
           <ValorantLogo className={styles.logo} />
         </a>
