@@ -128,7 +128,7 @@ const Page = async ({
         </div>
       </div>
       <Divider>Comments</Divider>
-      <CommentsSection comments={comments} maxDepth={2} />
+      <CommentsSection comments={comments} maxDepth={5} />
     </div>
   );
 };
