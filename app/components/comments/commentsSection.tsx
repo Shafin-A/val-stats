@@ -28,6 +28,11 @@ export const CommentsSection = ({
     setIsModalOpen(false);
   };
 
+  const clearToken = () => {
+    localStorage.removeItem("token");
+    location.reload();
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem("token");
@@ -50,11 +55,15 @@ export const CommentsSection = ({
         {currentUser ? (
           <>
             Logged in as
-            <strong> {currentUser?.user_name}</strong>
+            <strong> {currentUser?.user_name}</strong>. Click here to{" "}
+            <strong className="cursor" onClick={clearToken}>
+              logout
+            </strong>
+            .
           </>
         ) : (
           <>
-            <strong className="log-in" onClick={openModal}>
+            <strong className="cursor" onClick={openModal}>
               Log in
             </strong>{" "}
             by trying to post
