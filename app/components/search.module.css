@@ -1,25 +1,19 @@
-.text_field {
-  border-radius: 1rem;
-  font-size: 1.5rem;
-  padding: 1rem;
-  border: 1px solid #3b3b3b;
-
-  @media (prefers-color-scheme: dark) {
-    border: 1px solid #ccc;
-  }
-}
-
 .search_container {
   display: flex;
   flex-direction: column;
   position: relative;
-  /* width: 50%; */
+  width: 50%;
 }
 
 .suggestions_container {
-  position: relative;
   margin-top: 4px;
   height: 150px;
+
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 1;
 }
 
 .suggestions_list {
@@ -27,9 +21,8 @@
   overflow-y: auto;
   background-color: #fff;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  z-index: 1000;
   border-radius: 1rem;
-  font-size: 1.5rem;
 
   scrollbar-color: #c1c1c1 #e6e6e6;
   scrollbar-width: thin;
@@ -37,8 +30,8 @@
   border-radius: 10px !important;
 
   @media (prefers-color-scheme: dark) {
-    background-color: #3b3b3b;
-    border: 1px solid #ccc;
+    background-color: #141627;
+    border: 1px solid #212836;
   }
 }
 
@@ -60,4 +53,10 @@
 .suggestions_list::-webkit-scrollbar {
   width: 7px;
   scroll-behavior: smooth !important;
+}
+
+.suggestions_item:hover {
+  filter: brightness(115%);
+  backdrop-filter: saturate(150%);
+  cursor: pointer;
 }

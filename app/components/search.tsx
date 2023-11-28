@@ -6,6 +6,10 @@ import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { useRouter } from "next/navigation";
 import { getPlayerAccount } from "../../apis/api";
+import { Card, TextInput } from "@tremor/react";
+import { PlayerGameNameClient } from "./playerGameNameClient";
+import { PlayerTagLineClient } from "./playerTaglineClient";
+import SearchIcon from "../../assets/search.svg";
 
 interface SearchProps {
   suggestions?: string[];
@@ -60,6 +64,11 @@ const Search = ({ suggestions }: SearchProps) => {
   }) => {
     const suggestion = filteredSuggestions[index];
 
+    const splitSuggestion = suggestion.split("#");
+
+    const gameName = splitSuggestion[0];
+    const tagLine = splitSuggestion[1];
+
     return (
       <div
         style={style}
@@ -67,7 +76,8 @@ const Search = ({ suggestions }: SearchProps) => {
         onClick={() => handleSuggestionClick(suggestion)}
         onMouseDown={(e) => e.preventDefault()}
       >
-        {suggestion}
+        <PlayerGameNameClient gameName={gameName} />{" "}
+        <PlayerTagLineClient tagLine={tagLine} />
       </div>
     );
   };
@@ -75,11 +85,10 @@ const Search = ({ suggestions }: SearchProps) => {
   return (
     <div
       className={styles.search_container}
-      style={{ width: suggestions && "50%" }}
       onBlur={() => setFilteredSuggestions([])}
     >
-      <input
-        className={styles.text_field}
+      <TextInput
+        icon={SearchIcon}
         type="text"
         placeholder="Search for a name#tag..."
         value={inputValue}
