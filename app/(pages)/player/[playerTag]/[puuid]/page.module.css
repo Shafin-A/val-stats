@@ -17,10 +17,13 @@
 
 .stats_container {
     display: flex;
-    flex-direction: row;
     gap: 0.75rem;
     width: 100%;
     justify-content: center;
+
+    @media (max-width: 1024px) {
+        flex-direction: column;
+    }
 }
 
 .sidebar_container {
@@ -28,6 +31,10 @@
     flex-direction: column;
     gap: 0.75rem;
     flex: 1;
+
+    @media (min-width: 1025px) {
+        min-width: 20rem;
+    }
 }
 
 .matches_container {
