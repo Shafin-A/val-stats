@@ -16,6 +16,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Card, Divider } from "@tremor/react";
 import { CommentsSection } from "../../../../components/comments/commentsSection";
 import { getPuuidComments } from "../../../../../apis/api";
+import { CommentSectionComment } from "../../../../../types/types";
 
 const Page = async ({
   params,
@@ -23,7 +24,20 @@ const Page = async ({
   params: { playerTag: string; puuid: string };
 }) => {
   const playerNameTag = decodeURIComponent(params.playerTag).split("#");
-  const comments = await getPuuidComments(params.puuid);
+
+  const fetchComments = async () => {
+    try {
+      const comments = await getPuuidComments(params.puuid);
+
+      return comments;
+    } catch (e) {
+      console.error(e);
+
+      return [] as CommentSectionComment[];
+    }
+  };
+
+  const comments = await fetchComments();
 
   return (
     <div className={styles.page_container}>
