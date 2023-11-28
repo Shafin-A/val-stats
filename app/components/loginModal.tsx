@@ -14,7 +14,6 @@ import { useState } from "react";
 import { login, signUp } from "../../apis/api";
 import styles from "./loginModal.module.css";
 import { Modal } from "./modal";
-import { sign } from "crypto";
 
 interface loginModalProps {
   isOpen: boolean;
@@ -71,7 +70,7 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
     },
   });
 
-  const [loginError, setLoginError] = useState("");
+  const [loginApiErrorMessage, setLoginApiErrorMessage] = useState("");
 
   const handleLogin = async () => {
     try {
@@ -85,7 +84,7 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
       window.location.reload();
     } catch (e: any) {
       console.error(e);
-      setLoginError(e.message);
+      setLoginApiErrorMessage(e.message);
     }
   };
 
@@ -102,9 +101,47 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
       window.location.reload();
     } catch (e: any) {
       console.error(e);
-      setLoginError(e.message);
+      setLoginApiErrorMessage(e.message);
     }
   };
+
+  const isLoginApiErrorMessageEmpty = loginApiErrorMessage.length === 0;
+
+  const isLoginUsernameEmpty = tabState.login.usernameValue.length === 0;
+
+  const isLoginErrorMessageEmpty = tabState.login.errorMessage.length === 0;
+
+  const isLoginPasswordEmpty = tabState.login.passwordValue.length === 0;
+
+  const isRegisterEmailEmpty = tabState.register.emailValue.length === 0;
+
+  const isValidEmail =
+    /(^[a-zA-Z0-9'_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)/.test(
+      tabState.register.emailValue
+    );
+
+  const isEmailError = !isValidEmail && !isRegisterEmailEmpty;
+
+  const isRegisterPasswordEmpty = tabState.register.passwordValue.length === 0;
+
+  const isRegisterPasswordErrorMessageEmpty =
+    tabState.register.passwordErrorMessage.length === 0;
+
+  const arePasswordsMatching =
+    tabState.register.passwordValue === tabState.register.confirmPasswordValue;
+
+  const isRegisterUsernameEmpty = tabState.register.usernameValue.length === 0;
+
+  const isRegisterConfirmPassEmpty =
+    tabState.register.confirmPasswordValue.length === 0;
+
+  const isRegisterButtonDisabled =
+    !isRegisterPasswordErrorMessageEmpty ||
+    !arePasswordsMatching ||
+    isRegisterUsernameEmpty ||
+    isRegisterEmailEmpty ||
+    isRegisterPasswordEmpty ||
+    isRegisterConfirmPassEmpty;
 
   return (
     <Modal isOpen={isOpen} onClose={closeModal}>
@@ -124,7 +161,7 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
                   placeholder="Type username here"
                   value={tabState.login.usernameValue}
                   onChange={(e) => {
-                    setLoginError("");
+                    setLoginApiErrorMessage("");
                     setTabState((prevTabState) => ({
                       ...prevTabState,
                       login: {
@@ -133,24 +170,25 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
                       },
                     }));
                   }}
-                  error={loginError.length > 0}
-                  errorMessage={loginError}
+                  error={!isLoginApiErrorMessageEmpty}
+                  errorMessage={loginApiErrorMessage}
                 />
 
                 <TextInput
                   placeholder="Type password here"
                   type="password"
                   error={
-                    (tabState.login.passwordValue.length > 0 &&
-                      !(tabState.login.errorMessage.length === 0)) ||
-                    loginError.length > 0
+                    (!isLoginPasswordEmpty && !isLoginErrorMessageEmpty) ||
+                    !isLoginApiErrorMessageEmpty
                   }
                   errorMessage={
-                    loginError ? loginError : tabState.login.errorMessage
+                    loginApiErrorMessage
+                      ? loginApiErrorMessage
+                      : tabState.login.errorMessage
                   }
                   value={tabState.login.passwordValue}
                   onChange={(e) => {
-                    setLoginError("");
+                    setLoginApiErrorMessage("");
                     setTabState((prevTabState) => ({
                       ...prevTabState,
                       login: {
@@ -165,8 +203,8 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
               <Button
                 onClick={handleLogin}
                 disabled={
-                  tabState.login.errorMessage.length !== 0 ||
-                  tabState.login.usernameValue.length === 0
+                  !isLoginErrorMessageEmpty ||
+                  (isLoginUsernameEmpty && isLoginErrorMessageEmpty)
                 }
               >
                 <strong>Login</strong>
@@ -193,11 +231,7 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
                 <TextInput
                   placeholder="Type email here"
                   value={tabState.register.emailValue}
-                  error={
-                    !/(^[a-zA-Z0-9'_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)/.test(
-                      tabState.register.emailValue
-                    ) && !(tabState.register.emailValue.length === 0)
-                  }
+                  error={isEmailError}
                   errorMessage="Not a valid email"
                   onChange={(e) =>
                     setTabState((prevTabState) => ({
@@ -215,8 +249,8 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
                   type="password"
                   value={tabState.register.passwordValue}
                   error={
-                    tabState.register.passwordValue.length > 0 &&
-                    !(tabState.register.passwordErrorMessage.length === 0)
+                    !isRegisterPasswordEmpty &&
+                    !isRegisterPasswordErrorMessageEmpty
                   }
                   errorMessage={tabState.register.passwordErrorMessage}
                   onChange={(e) => {
@@ -232,13 +266,10 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
                 />
 
                 <TextInput
-                  placeholder="Confirm password here"
+                  placeholder="Type password here again"
                   type="password"
                   value={tabState.register.confirmPasswordValue}
-                  error={
-                    tabState.register.passwordValue !==
-                    tabState.register.confirmPasswordValue
-                  }
+                  error={!arePasswordsMatching}
                   errorMessage={tabState.register.confirmPasswordErrorMessage}
                   onChange={(e) => {
                     setTabState((prevTabState) => ({
@@ -254,15 +285,7 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
               </div>
               <Button
                 onClick={handleSignUp}
-                disabled={
-                  tabState.register.passwordErrorMessage.length !== 0 ||
-                  tabState.register.passwordValue !==
-                    tabState.register.confirmPasswordValue ||
-                  tabState.register.usernameValue.length === 0 ||
-                  tabState.register.emailValue.length === 0 ||
-                  tabState.register.passwordValue.length === 0 ||
-                  tabState.register.confirmPasswordValue.length === 0
-                }
+                disabled={isRegisterButtonDisabled}
               >
                 Register
               </Button>
