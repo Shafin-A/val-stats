@@ -20,6 +20,8 @@ interface loginModalProps {
   closeModal: Function;
 }
 
+const USERNAME_MAX_LENGTH = 20;
+
 const SPECIAL_CHAR_MESSAGE =
   "Password must have at least one of '@', '#', '$', '%', '^', '&', '+', or '='";
 
@@ -158,6 +160,7 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
             <div className={styles.content_container}>
               <div className={styles.input_container}>
                 <TextInput
+                  maxLength={USERNAME_MAX_LENGTH}
                   placeholder="Type username here"
                   value={tabState.login.usernameValue}
                   onChange={(e) => {
@@ -204,7 +207,8 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
                 onClick={handleLogin}
                 disabled={
                   !isLoginErrorMessageEmpty ||
-                  (isLoginUsernameEmpty && isLoginErrorMessageEmpty)
+                  isLoginUsernameEmpty ||
+                  isLoginPasswordEmpty
                 }
               >
                 <strong>Login</strong>
@@ -216,6 +220,7 @@ export const LoginModal = ({ isOpen, closeModal }: loginModalProps) => {
               <div className={styles.input_container}>
                 <TextInput
                   placeholder="Type username here"
+                  maxLength={USERNAME_MAX_LENGTH}
                   value={tabState.register.usernameValue}
                   onChange={(e) =>
                     setTabState((prevTabState) => ({
