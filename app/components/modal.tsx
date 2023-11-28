@@ -17,8 +17,9 @@ export const Modal = ({
 }: modalProps) => {
   return (
     <div
-      className={styles.overlay}
-      style={{ display: isOpen ? "flex" : "none" }}
+      className={`${styles.overlay} ${
+        isOpen ? styles.overlay_display_flex : styles.overlay_display_none
+      }`}
       onClick={() => closeOnOverlayClick && onClose()}
     >
       <Card className={styles.modal} onClick={(e) => e.stopPropagation()}>

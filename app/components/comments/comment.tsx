@@ -1,9 +1,12 @@
 "use client";
+
 import React, { useState } from "react";
 import { CommentSectionComment, User } from "../../../types/types";
 import { Button, Card, Divider } from "@tremor/react";
 import { CommentInput } from "./commentInput";
 import xss from "xss";
+
+import "./styles.css";
 
 interface commentProps {
   comment: CommentSectionComment;
@@ -34,7 +37,7 @@ export const Comment = ({ comment, maxDepth, currentUser }: commentProps) => {
   });
 
   return (
-    <Card style={{ marginTop: "1rem" }}>
+    <Card className="comment-container">
       <p>
         <strong>{comment.user_name}</strong> - {timeStamp}
       </p>
@@ -47,7 +50,7 @@ export const Comment = ({ comment, maxDepth, currentUser }: commentProps) => {
         />
       }
       <Button
-        style={{ marginTop: "1rem", marginBottom: "1rem" }}
+        className="reply-button"
         onClick={() => setShowReplyBox(!showReplyBox)}
       >
         <strong>{!showReplyBox ? "Reply" : "Cancel"}</strong>
@@ -56,11 +59,7 @@ export const Comment = ({ comment, maxDepth, currentUser }: commentProps) => {
         <CommentInput currentUser={currentUser} comment={comment} />
       )}
       {comment.replies.length > 0 && (
-        <div
-          style={{
-            margin: comment.depth < maxDepth ? "" : "0 -1.5rem -1.5rem",
-          }}
-        >
+        <div className={comment.depth < maxDepth ? "" : "comment-margin"}>
           {comment.replies.map((reply, index) => (
             <Comment
               key={index}

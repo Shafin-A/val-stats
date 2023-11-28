@@ -44,7 +44,7 @@ const Page = async ({
       <div className={styles.image_name_container}>
         <Suspense
           fallback={
-            <div style={{ display: "flex", alignItems: "center" }}>
+            <div className={styles.skeleton_container}>
               <Skeleton
                 baseColor="gray"
                 circle={true}

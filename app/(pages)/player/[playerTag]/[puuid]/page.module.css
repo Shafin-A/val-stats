@@ -37,6 +37,11 @@
     flex: 2;
 }
 
+.skeleton_container {
+    display: flex;
+    align-items: center;
+}
+
 .skeleton_circle {
     margin-right: 1rem;
 }

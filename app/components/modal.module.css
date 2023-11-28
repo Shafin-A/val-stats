@@ -10,6 +10,14 @@
     z-index: 1000;
 }
 
+.overlay_display_flex {
+    display: flex;
+}
+
+.overlay_display_none {
+    display: none;
+}
+
 .modal {
     display: flex;
     flex-direction: column;

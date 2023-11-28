@@ -50,7 +50,7 @@ export const CommentsSection = ({
   }, []);
 
   return (
-    <div style={{ width: "100%" }}>
+    <div className="comments-section-container">
       <span className="user-text">
         {currentUser ? (
           <>
