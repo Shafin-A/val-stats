@@ -6,8 +6,8 @@
 }
 
 .suggestions_container {
-  margin-top: 4px;
-  height: 150px;
+  margin-top: 0.25rem;
+  height: 9.375rem;
 
   position: absolute;
   top: 100%;
@@ -20,14 +20,13 @@
   border: 1px solid #3b3b3b;
   overflow-y: auto;
   background-color: #fff;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);
   z-index: 1000;
   border-radius: 1rem;
 
   scrollbar-color: #c1c1c1 #e6e6e6;
   scrollbar-width: thin;
-  border-radius: 5px;
-  border-radius: 10px !important;
+  border-radius: 0.625rem !important;
 
   @media (prefers-color-scheme: dark) {
     background-color: #141627;
@@ -37,7 +36,7 @@
 
 .suggestions_list::-webkit-scrollbar-thumb {
   background: #c1c1c1;
-  border-radius: 10px !important;
+  border-radius: 0.625rem !important;
 }
 
 .suggestions_list::-webkit-scrollbar-thumb:hover {
@@ -47,11 +46,11 @@
 .suggestions_list::-webkit-scrollbar-track {
   background: #e6e6e6;
   border-left: 1px solid transparent;
-  border-radius: 10px !important;
+  border-radius: 0.625rem !important;
 }
 
 .suggestions_list::-webkit-scrollbar {
-  width: 7px;
+  width: 0.5rem;
   scroll-behavior: smooth !important;
 }
 
