@@ -54,15 +54,10 @@ export const getPlayerAccount = async (
     { next: { revalidate: 300 } }
   );
 
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData);
-  }
-
-  const { status, data } = await res.json();
+  const { status, data, errors } = await res.json();
 
   if (status !== 200) {
-    throw new Error("Failed to fetch player data");
+    throw new Error(`${errors[0].message}`, { cause: status });
   }
 
   return data as PlayerAccount;
@@ -80,15 +75,10 @@ export const getPlayerMatches = async (
     { next: { revalidate: 300 } }
   );
 
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData);
-  }
-
-  const { status, data } = await res.json();
+  const { status, data, errors } = await res.json();
 
   if (status !== 200) {
-    throw new Error("Failed to fetch match data");
+    throw new Error(`${errors[0].message}`, { cause: status });
   }
 
   return data as Match[];
@@ -106,15 +96,10 @@ export const getPlayerMMR = async (
 
   const res = await fetch(apiUrl, { next: { revalidate: 300 } });
 
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData);
-  }
-
-  const { status, data } = await res.json();
+  const { status, data, errors } = await res.json();
 
   if (status !== 200) {
-    throw new Error("Failed to fetch MMR data");
+    throw new Error(`${errors[0].message}`, { cause: status });
   }
 
   return data as MMR;
@@ -127,15 +112,10 @@ export const getCompetitiveTiers = async (
     `https://valorant-api.com/v1/competitivetiers/${uuid}`
   );
 
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData);
-  }
-
-  const { status, data } = await res.json();
+  const { status, data, errors } = await res.json();
 
   if (status !== 200) {
-    throw new Error("Failed to fetch competitive tiers data");
+    throw new Error(`${errors[0].message}`, { cause: status });
   }
 
   return data as CompetitiveTiers;
@@ -144,15 +124,10 @@ export const getCompetitiveTiers = async (
 export const getMaps = async (): Promise<Map[]> => {
   const res = await fetch(`https://valorant-api.com/v1/maps`);
 
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData);
-  }
-
-  const { status, data } = await res.json();
+  const { status, data, error } = await res.json();
 
   if (status !== 200) {
-    throw new Error("Failed to fetch maps data");
+    throw new Error(`${error}`, { cause: status });
   }
 
   return data as Map[];
@@ -163,15 +138,10 @@ export const getAgents = async (): Promise<Agent[]> => {
     `https://valorant-api.com/v1/agents?isPlayableCharacter=true`
   );
 
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData);
-  }
-
-  const { status, data } = await res.json();
+  const { status, data, error } = await res.json();
 
   if (status !== 200) {
-    throw new Error("Failed to fetch agents data");
+    throw new Error(`${error}`, { cause: status });
   }
 
   return data as Agent[];
