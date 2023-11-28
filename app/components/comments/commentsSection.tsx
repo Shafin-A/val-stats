@@ -6,6 +6,7 @@ import { Comment } from "./comment";
 import { CommentSectionComment, User } from "../../../types/types";
 import { getCurrentLoggedInUser } from "../../../apis/api";
 import "./styles.css";
+import { LoginModal } from "../loginModal";
 
 interface commentsSectionProps {
   comments: CommentSectionComment[];
@@ -17,6 +18,15 @@ export const CommentsSection = ({
   maxDepth,
 }: commentsSectionProps) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +53,12 @@ export const CommentsSection = ({
             <strong> {currentUser?.user_name}</strong>
           </>
         ) : (
-          <>Log in by trying to post</>
+          <>
+            <strong className="log-in" onClick={openModal}>
+              Log in
+            </strong>{" "}
+            by trying to post
+          </>
         )}
       </span>
       <CommentInput currentUser={currentUser} />
@@ -55,6 +70,7 @@ export const CommentsSection = ({
           currentUser={currentUser}
         />
       ))}
+      <LoginModal isOpen={isModalOpen} closeModal={closeModal} />
     </div>
   );
 };

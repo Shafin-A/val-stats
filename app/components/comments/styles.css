@@ -70,3 +70,7 @@
     color: rgb(107 114 128);
     font-size: 0.875rem;
 }
+
+.log-in {
+    cursor: pointer;
+}
