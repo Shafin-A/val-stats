@@ -1,0 +1,20 @@
+.error_container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.error_title {
+    font-size: xx-large;
+    font-weight: 700;
+}
+
+.error_message {
+    font-size: large;
+    font-weight: 500;
+}
+
+.error_sub_message {
+    font-size: medium;
+}

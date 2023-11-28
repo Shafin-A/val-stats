@@ -57,7 +57,7 @@ export const getPlayerAccount = async (
   const { status, data, errors } = await res.json();
 
   if (status !== 200) {
-    throw new Error(`${errors[0].message}`, { cause: status });
+    throw new Error(`${status}: ${errors[0].message}`);
   }
 
   return data as PlayerAccount;
@@ -78,7 +78,7 @@ export const getPlayerMatches = async (
   const { status, data, errors } = await res.json();
 
   if (status !== 200) {
-    throw new Error(`${errors[0].message}`, { cause: status });
+    throw new Error(`${status}: ${errors[0].message}`);
   }
 
   return data as Match[];
@@ -99,7 +99,7 @@ export const getPlayerMMR = async (
   const { status, data, errors } = await res.json();
 
   if (status !== 200) {
-    throw new Error(`${errors[0].message}`, { cause: status });
+    throw new Error(`${status}: ${errors[0].message}`);
   }
 
   return data as MMR;
@@ -112,10 +112,10 @@ export const getCompetitiveTiers = async (
     `https://valorant-api.com/v1/competitivetiers/${uuid}`
   );
 
-  const { status, data, errors } = await res.json();
+  const { status, data, error } = await res.json();
 
   if (status !== 200) {
-    throw new Error(`${errors[0].message}`, { cause: status });
+    throw new Error(`${status}: ${error}`);
   }
 
   return data as CompetitiveTiers;
@@ -127,7 +127,7 @@ export const getMaps = async (): Promise<Map[]> => {
   const { status, data, error } = await res.json();
 
   if (status !== 200) {
-    throw new Error(`${error}`, { cause: status });
+    throw new Error(`${status}: ${error}`);
   }
 
   return data as Map[];
@@ -141,7 +141,7 @@ export const getAgents = async (): Promise<Agent[]> => {
   const { status, data, error } = await res.json();
 
   if (status !== 200) {
-    throw new Error(`${error}`, { cause: status });
+    throw new Error(`${status}: ${error}`);
   }
 
   return data as Agent[];
