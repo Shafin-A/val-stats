@@ -5,19 +5,22 @@
 }
 
 .title_logo_container {
-  display: inline-flex;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   font-size: xx-large;
+  font-weight: 600;
   word-break: break-all;
+  align-items: center;
 }
 
 .logo_container {
   display: block;
-  margin: auto 8px auto auto;
 }
 
 .logo {
   fill: #000;
-  height: 100px;
+  height: 6.25rem;
   width: fit-content;
 
   @media (prefers-color-scheme: dark) {
@@ -28,12 +31,13 @@
 .search_container {
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
 }
 
 .leaderboard_cards_container {
   display: flex;
   justify-content: center;
-  margin-top: 12px;
-  gap: 12px;
+  margin-top: 1rem;
+  gap: 0.875rem;
   flex-wrap: wrap
 }

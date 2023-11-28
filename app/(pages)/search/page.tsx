@@ -40,7 +40,7 @@ const Page = async () => {
         <div className={styles.logo_container}>
           <ValorantLogo className={styles.logo} />
         </div>
-        <h1>Valorant Stats</h1>
+        <h1>VALORANT STATS</h1>
       </div>
       <div className={styles.search_container}>
         <Suspense fallback={<p>Loading leaderboard....</p>}>
