@@ -178,7 +178,7 @@ export const signUp = async (
   email: string,
   password: string
 ): Promise<LoginToken> => {
-  const res = await fetch(`http://127.0.0.1:8000/auth/signup`, {
+  const res = await fetch(`https://val-stats-server.fly.dev/auth/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -201,7 +201,7 @@ export const signUp = async (
 };
 
 export const getCurrentLoggedInUser = async (token: string): Promise<User> => {
-  const res = await fetch(`http://127.0.0.1:8000/users/me`, {
+  const res = await fetch(`https://val-stats-server.fly.dev/users/me`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -221,9 +221,12 @@ export const getCurrentLoggedInUser = async (token: string): Promise<User> => {
 export const getPuuidComments = async (
   puuid: string
 ): Promise<CommentSectionComment[]> => {
-  const res = await fetch(`http://127.0.0.1:8000/comments/puuid/${puuid}`, {
-    cache: "no-cache",
-  });
+  const res = await fetch(
+    `https://val-stats-server.fly.dev/comments/puuid/${puuid}`,
+    {
+      cache: "no-cache",
+    }
+  );
 
   if (!res.ok) {
     const errorData = await res.json();
@@ -248,15 +251,18 @@ export const postComment = async (
       }
     : ({ content: content } as Record<string, string>);
 
-  const res = await fetch(`http://127.0.0.1:8000/comments/puuid/${puuid}`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    cache: "no-cache",
-    body: JSON.stringify(body),
-  });
+  const res = await fetch(
+    `https://val-stats-server.fly.dev/comments/puuid/${puuid}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      cache: "no-cache",
+      body: JSON.stringify(body),
+    }
+  );
 
   if (!res.ok) {
     const errorData = await res.json();

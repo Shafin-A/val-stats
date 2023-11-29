@@ -29,6 +29,7 @@
     "xss": "^1.0.14"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.4.11",
     "@svgr/webpack": "^8.1.0",
     "@types/react-window": "^1.8.5",
     "autoprefixer": "^10.4.16",
