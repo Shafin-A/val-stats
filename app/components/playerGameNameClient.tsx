@@ -1,4 +1,3 @@
-import { getPlayerAccount } from "../../apis/api";
 import styles from "./playerGameName.module.css";
 
 interface playerGameNameProps {
