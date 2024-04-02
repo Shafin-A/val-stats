@@ -138,6 +138,18 @@ export const getCompetitiveTiers = async (
   return data as CompetitiveTiers;
 };
 
+export const getAllCompetitiveTiers = async (): Promise<CompetitiveTiers[]> => {
+  const res = await fetch(`https://valorant-api.com/v1/competitivetiers`);
+
+  const { status, data, error } = await res.json();
+
+  if (status !== 200) {
+    throw new Error(`${status}: ${error}`);
+  }
+
+  return data as CompetitiveTiers[];
+};
+
 export const getMaps = async (): Promise<Map[]> => {
   const res = await fetch(`https://valorant-api.com/v1/maps`);
 
