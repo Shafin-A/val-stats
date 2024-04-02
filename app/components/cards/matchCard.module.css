@@ -1,0 +1,8 @@
+.tab_list {
+    justify-content: space-between;
+}
+
+.tab {
+    justify-content: center;
+    width: 100%;
+}

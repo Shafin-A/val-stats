@@ -63,6 +63,23 @@ export const getPlayerAccount = async (
   return data as PlayerAccount;
 };
 
+export const getMatch = async (matchId: string): Promise<Match> => {
+  const res = await fetch(
+    `https://api.henrikdev.xyz/valorant/v2/match/${matchId}`,
+    {
+      next: { revalidate: 300 },
+    }
+  );
+
+  const { status, data, errors } = await res.json();
+
+  if (status !== 200) {
+    throw new Error(`${status}: ${errors[0].message}`);
+  }
+
+  return data as Match;
+};
+
 export const getPlayerMatches = async (
   affinity: string,
   name: string,
