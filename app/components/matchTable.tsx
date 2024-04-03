@@ -44,18 +44,22 @@ const MatchTable = async ({ match, players }: MatchTableProps) => {
   const partiedPlayers = players.reduce((groupedPlayers, player) => {
     const partyID = player.party_id;
     groupedPlayers[partyID] = groupedPlayers[partyID] || [];
-    groupedPlayers[partyID].push(player);
+    groupedPlayers[partyID].push(player.puuid);
     return groupedPlayers;
-  }, {} as Record<string, Player[]>);
+  }, {} as Record<string, string[]>);
 
   const team = players[0].team;
 
   const partyColors =
-    team === "Blue" ? ["#32cd32", "#ff7f50"] : [" #ff4500", "#00ced1"];
+    team === "Blue" ? ["#32cd32", "#ff7f50"] : ["#ff4500", "#00ced1"];
 
-  const partyColorsMap = Object.keys(partiedPlayers).reduce((acc, key, i) => {
-    if (partiedPlayers[key].length > 1) acc[key] = partyColors[i];
-
+  const partyColorsMap = Object.keys(partiedPlayers).reduce((acc, key) => {
+    if (partiedPlayers[key].length > 1) {
+      const color = partyColors.pop();
+      if (color !== undefined) {
+        acc[key] = color;
+      }
+    }
     return acc;
   }, {} as Record<string, string>);
 
