@@ -3,6 +3,7 @@
 }
 
 .table_row {
+    position: relative;
     font-size: .875rem;
     font-weight: 700;
 
