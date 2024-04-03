@@ -6,3 +6,40 @@
     justify-content: center;
     width: 100%;
 }
+
+.match_data_container {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.match_mode_map_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.grey_text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #898d94;
+}
+
+.bold_text {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.match_score_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.match_score {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.match_length_container {
+    display: flex;
+    flex-direction: column;
+}
