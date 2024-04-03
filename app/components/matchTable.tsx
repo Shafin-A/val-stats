@@ -11,7 +11,8 @@ import { PlayerTagLineClient } from "./playerTaglineClient";
 import { Match, Player } from "../../types/types";
 import styles from "./matchTable.module.css";
 import { getKASTForMatch, getPlayerAvgStatsForMatch } from "../helpers";
-import { getAllCompetitiveTiers, getCompetitiveTiers } from "../../apis/api";
+import { getAllCompetitiveTiers } from "../../apis/api";
+import PartyIcon from "../../assets/party.svg";
 
 interface MatchTableProps {
   match: Match;
@@ -40,13 +41,31 @@ const MatchTable = async ({ match, players }: MatchTableProps) => {
     return acc;
   }, {} as Record<string, Record<string, number>>);
 
-  console.log(match.teams.blue);
+  const partiedPlayers = players.reduce((groupedPlayers, player) => {
+    const partyID = player.party_id;
+    groupedPlayers[partyID] = groupedPlayers[partyID] || [];
+    groupedPlayers[partyID].push(player);
+    return groupedPlayers;
+  }, {} as Record<string, Player[]>);
+
+  const team = players[0].team;
+
+  const partyColors =
+    team === "Blue" ? ["#32cd32", "#ff7f50"] : [" #ff4500", "#00ced1"];
+
+  const partyColorsMap = Object.keys(partiedPlayers).reduce((acc, key, i) => {
+    if (partiedPlayers[key].length > 1) acc[key] = partyColors[i];
+
+    return acc;
+  }, {} as Record<string, string>);
 
   return (
-    <Table>
+    <Table className={styles.table}>
       <TableHead>
         <TableRow>
-          <TableHeaderCell>Player</TableHeaderCell>
+          <TableHeaderCell>
+            <span className={styles.table_player_header}>Player</span>
+          </TableHeaderCell>
           <TableHeaderCell>Rank</TableHeaderCell>
           <TableHeaderCell>ACS</TableHeaderCell>
           <TableHeaderCell>K</TableHeaderCell>
@@ -59,7 +78,9 @@ const MatchTable = async ({ match, players }: MatchTableProps) => {
           <TableHeaderCell>KAST</TableHeaderCell>
         </TableRow>
       </TableHead>
-      <TableBody>
+      <TableBody
+        className={team === "Blue" ? styles.blue_gradient : styles.red_gradient}
+      >
         {players.map((player) => {
           const rankImg = latestCompTier.tiers.find(
             (tier) =>
@@ -71,6 +92,16 @@ const MatchTable = async ({ match, players }: MatchTableProps) => {
             <TableRow key={player.puuid} className={styles.table_row}>
               <TableCell>
                 <div className={styles.table_player_cell}>
+                  {partiedPlayers[player.party_id].length > 1 && (
+                    <div
+                      className={styles.partied_icon}
+                      style={{
+                        fill: partyColorsMap[player.party_id],
+                      }}
+                    >
+                      <PartyIcon />
+                    </div>
+                  )}
                   <img
                     className={styles.agent_img}
                     src={player.assets.agent.small}
