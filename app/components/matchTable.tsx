@@ -10,7 +10,11 @@ import { PlayerGameNameClient } from "./playerGameNameClient";
 import { PlayerTagLineClient } from "./playerTaglineClient";
 import { Match, Player } from "../../types/types";
 import styles from "./matchTable.module.css";
-import { getKASTForMatch, getPlayerAvgStatsForMatch } from "../helpers";
+import {
+  getFirstBloodsAndDeaths,
+  getKASTForMatch,
+  getPlayerAvgStatsForMatch,
+} from "../helpers";
 import { getAllCompetitiveTiers } from "../../apis/api";
 import PartyIcon from "../../assets/party.svg";
 
@@ -56,12 +60,22 @@ const MatchTable = async ({ match, players }: MatchTableProps) => {
   const partyColorsMap = Object.keys(partiedPlayers).reduce((acc, key) => {
     if (partiedPlayers[key].length > 1) {
       const color = partyColors.pop();
-      if (color !== undefined) {
+      if (color) {
         acc[key] = color;
       }
     }
     return acc;
   }, {} as Record<string, string>);
+
+  const firstBloodsAndDeaths = getFirstBloodsAndDeaths(match.rounds);
+
+  const firstBloods = firstBloodsAndDeaths.flatMap((firstBloodAndDeath) =>
+    Object.keys(firstBloodAndDeath)
+  );
+
+  const firstDeaths = firstBloodsAndDeaths.flatMap((firstBloodAndDeath) =>
+    Object.values(firstBloodAndDeath)
+  );
 
   return (
     <Table className={styles.table}>
@@ -80,6 +94,8 @@ const MatchTable = async ({ match, players }: MatchTableProps) => {
           <TableHeaderCell>ADR</TableHeaderCell>
           <TableHeaderCell>HS%</TableHeaderCell>
           <TableHeaderCell>KAST</TableHeaderCell>
+          <TableHeaderCell>FB</TableHeaderCell>
+          <TableHeaderCell>FD</TableHeaderCell>
         </TableRow>
       </TableHead>
       <TableBody
@@ -87,9 +103,7 @@ const MatchTable = async ({ match, players }: MatchTableProps) => {
       >
         {players.map((player) => {
           const rankImg = latestCompTier.tiers.find(
-            (tier) =>
-              tier.tierName.toLowerCase() ===
-              player.currenttier_patched.toLowerCase()
+            (tier) => tier.tier === player.currenttier
           )!.smallIcon;
 
           return (
@@ -151,6 +165,12 @@ const MatchTable = async ({ match, players }: MatchTableProps) => {
               </TableCell>
               <TableCell>
                 {allPlayerMatchStats[player.puuid].KAST.toFixed(1)}%
+              </TableCell>
+              <TableCell>
+                {firstBloods.filter((puuid) => puuid === player.puuid).length}
+              </TableCell>
+              <TableCell>
+                {firstDeaths.filter((puuid) => puuid === player.puuid).length}
               </TableCell>
             </TableRow>
           );

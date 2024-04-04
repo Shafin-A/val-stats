@@ -5,6 +5,7 @@ import {
   PlayerAccount,
   Round,
   Agent,
+  KillEvent,
 } from "../types/types";
 
 export const getKASTForMatch = (
@@ -256,4 +257,31 @@ export const getAgentImg = (agentName: string, agents: Agent[]) => {
   if (!imgSrc) throw new Error("Could not find agent!");
 
   return imgSrc;
+};
+
+export const getFirstBloodsAndDeaths = (rounds: Round[]) => {
+  const killEvents: KillEvent[] = [];
+  for (const round of rounds) {
+    let killEvent: KillEvent | null = null;
+
+    round.player_stats.forEach((player) => {
+      if (!player.kill_events) return;
+
+      player.kill_events.forEach((kill) => {
+        if (
+          !killEvent ||
+          kill.kill_time_in_round < killEvent?.kill_time_in_round
+        )
+          killEvent = kill;
+      });
+    });
+
+    if (killEvent) killEvents.push(killEvent);
+  }
+
+  const firstBloodsAndDeaths = killEvents.map((killEvent) => ({
+    [killEvent.killer_puuid]: killEvent.victim_puuid,
+  }));
+
+  return firstBloodsAndDeaths as Record<string, string>[];
 };
