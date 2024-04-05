@@ -11,6 +11,7 @@ import styles from "./matchCard.module.css";
 import { Match } from "../../../types/types";
 import MatchTable from "../matchTable";
 import { formatDate } from "../../helpers";
+import { MatchSummary } from "../matchSummary";
 
 interface MatchCardProps {
   match: Match;
@@ -70,6 +71,7 @@ const MatchCard = ({ match }: MatchCardProps) => {
         </TabList>
         <TabPanels>
           <TabPanel>
+            <MatchSummary match={match} />
             <MatchTable match={match} players={match.players.blue} />
             <Divider>VS</Divider>
             <MatchTable match={match} players={match.players.red} />

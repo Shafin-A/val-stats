@@ -7,6 +7,15 @@ import {
   Agent,
   KillEvent,
 } from "../types/types";
+import eliminationloss1 from "../assets/eliminationloss1.png";
+import eliminationwin1 from "../assets/eliminationwin1.png";
+import defuseloss1 from "../assets/diffuseloss1.png";
+import defusewin1 from "../assets/diffusewin1.png";
+import surrender from "../assets/EarlySurrender_Flag.png";
+import timeloss1 from "../assets/timeloss1.png";
+import timewin1 from "../assets/timewin1.png";
+import explosionloss1 from "../assets/explosionloss1.png";
+import explosionwin1 from "../assets/explosionwin1.png";
 
 export const getKASTForMatch = (
   playerPuuid: string,
@@ -284,4 +293,25 @@ export const getFirstBloodsAndDeaths = (rounds: Round[]) => {
   }));
 
   return firstBloodsAndDeaths as Record<string, string>[];
+};
+
+export const getRoundOutcomeImg = (outcome: string, team: string) => {
+  switch (outcome) {
+    case "Eliminated":
+      if (team === "Blue") return eliminationwin1.src;
+      if (team === "Red") return eliminationloss1.src;
+    case "Bomb defused":
+      if (team === "Blue") return defusewin1.src;
+      if (team === "Red") return defuseloss1.src;
+    case "Surrendered":
+      if (team === "Blue" || team === "Red") return surrender.src;
+    case "Bomb detonated":
+      if (team === "Blue") return explosionwin1.src;
+      if (team === "Red") return explosionloss1.src;
+    case "Round timer expired":
+      if (team === "Blue") return timewin1.src;
+      if (team === "Red") return timeloss1.src;
+    default:
+      return outcome;
+  }
 };
