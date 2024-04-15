@@ -12,7 +12,7 @@ interface MatchTimelineProps {
 }
 
 export const MatchTimeline = ({ match, maps }: MatchTimelineProps) => {
-  const [x, setX] = useState(0);
+  const [selectedRound, setSelectedRound] = useState(0);
   const map = match.metadata.map;
 
   const mapData = maps.find(
@@ -20,7 +20,7 @@ export const MatchTimeline = ({ match, maps }: MatchTimelineProps) => {
   );
 
   const minimapImg = mapData?.displayIcon;
-  const round = match.rounds[x];
+  const round = match.rounds[selectedRound];
 
   const plantLocation = round.plant_events.plant_location;
 
@@ -96,8 +96,11 @@ export const MatchTimeline = ({ match, maps }: MatchTimelineProps) => {
           );
         })}
       </div>
-      <MatchSummary match={match} />
-      <button onClick={() => setX(1)}>Press</button>
+      <MatchSummary
+        match={match}
+        isClickable
+        onClick={(index) => setSelectedRound(index)}
+      />
     </>
   );
 };
