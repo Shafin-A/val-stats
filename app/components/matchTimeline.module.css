@@ -1,0 +1,35 @@
+.map_container {
+    position: relative;
+}
+
+.map_img {
+    width: 100%;
+    height: auto;
+}
+
+.spike_img {
+    width: 4.6875%;
+    position: absolute;
+    transform: translate(-50%, -50%)
+}
+
+.player_agent_container {
+    position: absolute;
+    width: 4.6875%;
+    height: 4.6875%;
+    display: flex;
+}
+
+.agent_direction_img {
+    z-index: 9;
+    position: absolute;
+}
+
+.agent_img {
+    z-index: 10;
+    position: relative;
+    border-radius: 50%;
+    width: 65%;
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}

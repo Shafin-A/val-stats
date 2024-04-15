@@ -12,14 +12,18 @@ import { Match } from "../../../types/types";
 import MatchTable from "../matchTable";
 import { formatDate } from "../../helpers";
 import { MatchSummary } from "../matchSummary";
+import { MatchTimeline } from "../matchTimeline";
+import { getMaps } from "../../../apis/api";
 
 interface MatchCardProps {
   match: Match;
 }
 
-const MatchCard = ({ match }: MatchCardProps) => {
+const MatchCard = async ({ match }: MatchCardProps) => {
   const gameLengthInSeconds = match.metadata.game_length;
   const gameLengthDate = new Date(gameLengthInSeconds * 1000);
+
+  const maps = await getMaps();
 
   return (
     <Card>
@@ -78,17 +82,13 @@ const MatchCard = ({ match }: MatchCardProps) => {
           </TabPanel>
           <TabPanel>
             <p className="mt-4 leading-6 text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-              Diam nonumy eirmod tempor invidunt ut labore et dolore magna
-              aliquyam erat. Lorem ipsum dolor sit amet, consetetur sadipscing
-              elitr.
+              aaaDadassssd nonumysss eirmod tempor invidunt ut labore et dolore
+              magna aliquyam erat. Lorem ipsum dolor sit amet, consetetur
+              sadipscing elitr.
             </p>
           </TabPanel>
           <TabPanel>
-            <p className="mt-4 leading-6 text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-              Caaa nonumy eirmod tempor invidunt ut labore et dolore magna
-              aliquyam erat. Lorem ipsum dolor sit amet, consetetur sadipscing
-              elitr.
-            </p>
+            <MatchTimeline match={match} maps={maps} />
           </TabPanel>
           <TabPanel>
             <p className="mt-4 leading-6 text-tremor-default text-tremor-content dark:text-dark-tremor-content">
