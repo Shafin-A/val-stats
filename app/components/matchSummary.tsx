@@ -37,7 +37,7 @@ export const MatchSummary = ({ match }: MatchSummary) => {
             ) : (
               <div className={styles.round_lost}>•</div>
             )}
-            <div className={styles.grey_text}>{index}</div>
+            <div className={styles.grey_text}>{index + 1}</div>
           </div>
         );
       })}
