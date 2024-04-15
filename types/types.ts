@@ -249,40 +249,44 @@ export interface PlayerStats {
   stayed_in_spawn: boolean;
 }
 
+export interface PlantEvent {
+  plant_location: Location;
+  planted_by: {
+    puuid: string;
+    display_name: string;
+    team: string;
+  };
+  plant_site: string;
+  plant_time_in_round: number;
+  player_locations_on_plant: {
+    player_puuid: string;
+    player_display_name: string;
+    player_team: string;
+    location: Location;
+    view_radians: number;
+  }[];
+}
+
+export interface DefuseEvent {
+  defuse_location: Location;
+  defused_by: { puuid: string; display_name: string; team: string };
+  defuse_time_in_round: number;
+  player_locations_on_defuse: {
+    player_puuid: string;
+    player_display_name: string;
+    player_team: string;
+    location: Location;
+    view_radians: number;
+  }[];
+}
+
 export interface Round {
   winning_team: string;
   end_type: string;
   bomb_planted: boolean;
   bomb_defused: boolean;
-  plant_events: {
-    plant_location: Location;
-    planted_by: {
-      puuid: string;
-      display_name: string;
-      team: string;
-    };
-    plant_site: string;
-    plant_time_in_round: number;
-    player_locations_on_plant: {
-      player_puuid: string;
-      player_display_name: string;
-      player_team: string;
-      location: Location;
-      view_radians: number;
-    }[];
-  };
-  defuse_events: {
-    defuse_location: Location;
-    defused_by: { puuid: string; display_name: string; team: string };
-    defuse_time_in_round: number;
-    player_locations_on_defuse: {
-      player_puuid: string;
-      player_display_name: string;
-      player_team: string;
-      location: Location;
-      view_radians: number;
-    }[];
-  };
+  plant_events: PlantEvent;
+  defuse_events: DefuseEvent;
   player_stats: PlayerStats[];
 }
 
