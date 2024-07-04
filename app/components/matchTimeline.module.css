@@ -33,3 +33,31 @@
     margin: auto;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+.round_event_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.killer_info_container {
+    display: flex;
+    align-items: center;
+}
+
+.kill_agent_img {
+    width: 3rem;
+    height: 3rem;
+}
+
+.killer_container {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 10rem;
+}
+
+.kill_weapon {
+    transform: scaleX(-1);
+    width: 4rem;
+}

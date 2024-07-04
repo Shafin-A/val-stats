@@ -180,6 +180,14 @@ export interface DamageEvent {
   legshots: number;
 }
 
+export interface PlayerLocationEvent {
+  player_puuid: string;
+  player_display_name: string;
+  player_team: string;
+  location: Location;
+  view_radians: number;
+}
+
 export interface KillEvent {
   kill_time_in_round: number;
   kill_time_in_match: number;
@@ -197,13 +205,7 @@ export interface KillEvent {
     killfeed_icon: string;
   };
   secondary_fire_mode: boolean;
-  player_locations_on_kill: {
-    player_puuid: string;
-    player_display_name: string;
-    player_team: string;
-    location: Location;
-    view_radians: number;
-  }[];
+  player_locations_on_kill: PlayerLocationEvent[];
   assistants: {
     assistant_puuid: string;
     assistant_display_name: string;
@@ -258,26 +260,14 @@ export interface PlantEvent {
   };
   plant_site: string;
   plant_time_in_round: number;
-  player_locations_on_plant: {
-    player_puuid: string;
-    player_display_name: string;
-    player_team: string;
-    location: Location;
-    view_radians: number;
-  }[];
+  player_locations_on_plant: PlayerLocationEvent[];
 }
 
 export interface DefuseEvent {
   defuse_location: Location;
   defused_by: { puuid: string; display_name: string; team: string };
   defuse_time_in_round: number;
-  player_locations_on_defuse: {
-    player_puuid: string;
-    player_display_name: string;
-    player_team: string;
-    location: Location;
-    view_radians: number;
-  }[];
+  player_locations_on_defuse: PlayerLocationEvent[];
 }
 
 export interface Round {
